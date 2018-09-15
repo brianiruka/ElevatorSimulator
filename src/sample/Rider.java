@@ -1,11 +1,9 @@
 package sample;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.File;
@@ -28,8 +26,9 @@ public class Rider extends Pane
      Image image2 = new Image(file2.toURI().toString());
      Image image;
      Text floorLabel= new Text();
-     String direction;
-
+    Text timerLabel= new Text();
+    String direction;
+    Timer timer;
 
     public Rider(Pane pane, final int riderWeight, final int fromFloor, final int toFloor, int waitingTime){
         //rider constructor
@@ -40,27 +39,40 @@ public class Rider extends Pane
         double initYVal;
         switch(fromFloor){
             case 1:
-                initYVal = 470.0;
+                initYVal = 550.0;
                 break;
             case 2:
-                initYVal = 183.0;
+                initYVal = 433.0;
+                break;
+            case 3:
+                initYVal = 311.5;
+                break;
+            case 4:
+                initYVal = 190.0;
+                break;
+            case 5:
+                initYVal = 76.0;
                 break;
             default:
-                initYVal = 0;
+                initYVal = 550.0;
         }
         file1 = new File("src/sample/rider1.gif");
         image = new Image(file1.toURI().toString());
         riderAni = new ImageView(image);
-        riderAni.setFitHeight(133.0);
-        riderAni.setFitWidth(69.0);
+        riderAni.setFitHeight(60.0);
+        riderAni.setFitWidth(30.0);
         riderAni.setLayoutX(42.0);
         riderAni.setLayoutY(initYVal);
         riderAni.setPreserveRatio(true);
         floorLabel.setText(""+toFloor+"");
-        floorLabel.setLayoutX(80.0);
-        floorLabel.setLayoutY(initYVal+20);
+        floorLabel.setLayoutX(56.0);
+        floorLabel.setLayoutY(initYVal);
+        timerLabel.setText("0");
+        timerLabel.setLayoutX(56.0);
+        timerLabel.setLayoutY(initYVal-10);
         pane.getChildren().add(riderAni);
         pane.getChildren().add(floorLabel);
+        pane.getChildren().add(timerLabel);
         if (endFloor-startFloor>0){
             direction = "UP";
         }   else {
@@ -72,26 +84,28 @@ public class Rider extends Pane
 
     private void startTimer(){
         //starts total wait time timer
-        Timer timer= new Timer();
+        timer= new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 waitDuration++;
                 //System.out.println("Has been waiting for " + waitDuration + " secs");
-                System.out.println("Current elevator 1 status is: " + Controller.ec1.status);
-                System.out.println("floors to drop off are: " + Controller.ec1.getDropOffFloor());
-                System.out.println("floor to pick up are: " + Controller.ec1.getPickUpFloor());
+                //System.out.println("Current elevator 1 status is: " + Controller.ec1.status);
+                //System.out.println("floors to drop off are: " + Controller.ec1.getDropOffFloor());
+                //System.out.println("floor to pick up are: " + Controller.ec1.getPickUpFloor());
+                timerLabel.setText(Integer.toString(waitDuration));
             }
         };
         timer.scheduleAtFixedRate(task,1000,1000);
     }
 
-//    public int stopTimer(){
-//        int totalWait = waitDuration;
-//        timer.cancel();
-//        System.out.print("Total wait time was " + totalWait);
-//        return totalWait;
-//    }
+    public void stopTimer(){
+        timer.cancel();
+        //Controller.completeTrips++;
+        Controller.totalWait+=waitDuration;
+        Controller.averageWait=(Controller.totalWait/++Controller.completeTrips);
+        Controller.getAverageWait(Controller.averageWait,waitDuration);
+    }
 
      void walkToQueue(LinkedList<Rider> startFloorQueue){
         //uses the translate property to adjust object's x value
@@ -100,14 +114,18 @@ public class Rider extends Pane
         TranslateTransition tt = new TranslateTransition();
         tt.setNode(riderAni);
         tt.setToX(250-Controller.queueOffsets.get(startFloor-1));
-        tt.setDuration(Duration.seconds(2));
+        tt.setDuration(Duration.seconds(4));
         //tt.play();
          TranslateTransition fl = new TranslateTransition();
          fl.setNode(floorLabel);
-         fl.setToX(250-Controller.queueOffsets.get(startFloor-1)-20);
-         fl.setDuration(Duration.seconds(1.9));
+         fl.setToX(250-Controller.queueOffsets.get(startFloor-1));
+         fl.setDuration(Duration.seconds(4));
+         TranslateTransition tl = new TranslateTransition();
+         tl.setNode(timerLabel);
+         tl.setToX(250-Controller.queueOffsets.get(startFloor-1));
+         tl.setDuration(Duration.seconds(4));
         //fl.play();
-         ParallelTransition pt = new ParallelTransition(tt,fl);
+         ParallelTransition pt = new ParallelTransition(tt,fl,tl);
          pt.play();
         pt.onFinishedProperty().set(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -130,16 +148,21 @@ public class Rider extends Pane
     }
 
      void enterElevator(final ElevatorCar ec){
+         Double speed= Math.random()*3+1.5;
          riderAni.setImage(image);
          TranslateTransition tt = new TranslateTransition();
         tt.setNode(riderAni);
-        tt.setToX(400-ec.getStandingRoom());
-        tt.setDuration(Duration.seconds(2));
+        tt.setToX(315-ec.getStandingRoom());
+        tt.setDuration(Duration.seconds(speed));
          TranslateTransition fl = new TranslateTransition();
          fl.setNode(floorLabel);
-         fl.setToX(400-ec.getStandingRoom()-20);
-         fl.setDuration(Duration.seconds(1.8));
-         ParallelTransition pt = new ParallelTransition(tt,fl);
+         fl.setToX(315-ec.getStandingRoom()-5);
+         fl.setDuration(Duration.seconds(speed));
+         TranslateTransition tl = new TranslateTransition();
+         tl.setNode(timerLabel);
+         tl.setToX(315-ec.getStandingRoom()-5);
+         tl.setDuration(Duration.seconds(speed));
+         ParallelTransition pt = new ParallelTransition(tt,fl,tl);
         pt.play();
          final Boolean isLast = this==Controller.getWaitingRiders(startFloor).getLast();
          final int carWeight = ec.getCarWeight();
@@ -156,43 +179,54 @@ public class Rider extends Pane
         });
 
     }
-     void leaveElevator(){
-         riderAni.setImage(image);
-         //cancel timer
-        TranslateTransition tt = new TranslateTransition();
-         riderAni.setOpacity(1);
-         //circle.setRadius(20);
-        tt.setNode(riderAni);
-        tt.setToX(450);
-        tt.setDuration(Duration.seconds(.8));
-         TranslateTransition fl = new TranslateTransition();
-         fl.setNode(floorLabel);
-         fl.setToX(450-20);
-         fl.setDuration(Duration.seconds(1));
-         ParallelTransition pt = new ParallelTransition(tt,fl);
-        pt.play();
-        pt.onFinishedProperty().set(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                walkFromElevator();
-            }
-        });
-    }
+//     void leaveElevator(){
+//         Double speed= Math.random()*2+1.5;
+//         Double dist = Math.random()*50+350;
+//         riderAni.setImage(image);
+//         //cancel timer
+//        TranslateTransition tt = new TranslateTransition();
+//         riderAni.setOpacity(1);
+//         //circle.setRadius(20);
+//        tt.setNode(riderAni);
+//        tt.setToX(dist);
+//        tt.setDuration(Duration.seconds(speed));
+//         TranslateTransition fl = new TranslateTransition();
+//         fl.setNode(floorLabel);
+//         fl.setToX(dist-20);
+//         fl.setDuration(Duration.seconds(speed));
+//         ParallelTransition pt = new ParallelTransition(tt,fl);
+//        pt.play();
+//        pt.onFinishedProperty().set(new EventHandler<ActionEvent>() {
+//            public void handle(ActionEvent event) {
+//                walkFromElevator();
+//            }
+//        });
+//    }
 
     public void walkFromElevator(){
+        stopTimer();
+        Double speed= Math.random()*3+7;
+        riderAni.setImage(image);
+        riderAni.setOpacity(1);
         TranslateTransition tt = new TranslateTransition();
         tt.setNode(riderAni);
-        tt.setToX(700);
-        tt.setDuration(Duration.seconds(3));
+        tt.setToX(590);
+        tt.setDuration(Duration.seconds(speed));
         TranslateTransition fl = new TranslateTransition();
         fl.setNode(floorLabel);
-        fl.setToX(700-20);
-        fl.setDuration(Duration.seconds(2.8));
-        ParallelTransition pt = new ParallelTransition(tt,fl);
+        fl.setToX(590-20);
+        fl.setDuration(Duration.seconds(speed));
+        TranslateTransition tl = new TranslateTransition();
+        tl.setNode(timerLabel);
+        tl.setToX(590-20);
+        tl.setDuration(Duration.seconds(speed));
+        ParallelTransition pt = new ParallelTransition(tt,fl,tl);
         pt.play();
         pt.onFinishedProperty().set(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 riderAni.setVisible(false);
                 floorLabel.setVisible(false);
+                timerLabel.setVisible(false);
             }
         });
     }

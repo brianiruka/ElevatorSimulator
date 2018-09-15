@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Group?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
@@ -23,25 +23,188 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="603.0" layoutX="40.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" width="765.0" />
-      <Rectangle fx:id="car1" arcHeight="5.0" arcWidth="5.0" fill="#666666" height="200.0" layoutX="363.0" layoutY="404.0" stroke="BLACK" strokeType="INSIDE" width="134.0" />
-      <Rectangle fx:id="floor1_doorLeft" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="200.0" layoutX="293.0" layoutY="404.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="134.0" />
-      <Rectangle fx:id="floor1_doorRight" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="200.0" layoutX="426.0" layoutY="404.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="134.0" />
-      <Rectangle fx:id="floor2_doorLeft" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="200.0" layoutX="293.0" layoutY="107.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="134.0" />
-      <Rectangle fx:id="floor2_doorRight" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="200.0" layoutX="426.0" layoutY="107.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="134.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="603.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" width="663.0" />
+      <Rectangle fx:id="car2" arcHeight="5.0" arcWidth="5.0" fill="#666666" height="91.0" layoutX="433.0" layoutY="514.0" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor1_doorLeft2" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="406.0" layoutY="514.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor1_doorRight2" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="462.0" layoutY="514.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
       <Group layoutX="696.0" layoutY="435.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="599.0" layoutX="499.0" layoutY="11.0" stroke="WHITE" strokeType="INSIDE" width="176.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" layoutX="227.0" layoutY="9.0" stroke="WHITE" strokeType="INSIDE" width="137.0" />
-      <Line endX="475.0" endY="33.0" layoutX="333.0" layoutY="274.0" startX="-290.0" startY="33.0" />
-      <Line endX="53.5" endY="-53.0" layoutX="310.0" layoutY="160.0" startX="53.5" startY="146.5" />
-      <Line endX="53.5" endY="-53.0" layoutX="445.0" layoutY="160.0" startX="53.5" startY="146.5" />
-      <Line endX="53.5" endY="-53.0" layoutX="310.0" layoutY="457.0" startX="53.5" startY="146.5" />
-      <Line endX="53.5" endY="-53.0" layoutX="444.0" layoutY="457.0" startX="53.5" startY="146.5" />
-      <Button fx:id="addRider" layoutX="698.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleAddRider" text="Add Rider" />
-      <ComboBox fx:id="comboTo" editable="true" layoutX="694.0" layoutY="410.0" prefHeight="25.0" prefWidth="76.0" promptText="2" visibleRowCount="2" />
-      <ComboBox fx:id="comboFrom" layoutX="694.0" layoutY="357.0" onAction="#handleCombo1" prefHeight="25.0" prefWidth="76.0" promptText="1" visibleRowCount="2" />
-      <Text layoutX="700.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From Floor:" />
-      <Text layoutX="698.0" layoutY="396.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To Floor:" />
-      <Text fx:id="floor_read_out" layoutX="597.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a floor" />
+      <Rectangle fx:id="car3" arcHeight="5.0" arcWidth="5.0" fill="#666666" height="91.0" layoutX="545.0" layoutY="514.0" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor1_doorLeft3" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="518.0" layoutY="514.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor1_doorRight3" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="574.0" layoutY="514.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="car1" arcHeight="5.0" arcWidth="5.0" fill="#666666" height="91.0" layoutX="321.0" layoutY="514.0" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor1_doorLeft1" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="294.0" layoutY="514.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor1_doorRight1" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="350.0" layoutY="514.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor2_doorLeft1" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="294.0" layoutY="394.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor2_doorRight1" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="350.0" layoutY="394.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor3_doorLeft1" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="294.0" layoutY="274.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor3_doorRight1" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="350.0" layoutY="274.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor4_doorLeft1" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="294.0" layoutY="154.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor4_doorRight1" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="350.0" layoutY="154.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor5_doorLeft1" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="294.0" layoutY="34.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor5_doorRight1" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="350.0" layoutY="34.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor2_doorLeft2" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="406.0" layoutY="394.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor2_doorRight2" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="462.0" layoutY="394.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor3_doorLeft2" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="406.0" layoutY="274.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor3_doorRight2" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="462.0" layoutY="274.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor4_doorLeft2" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="406.0" layoutY="154.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor4_doorRight2" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="462.0" layoutY="154.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor2_doorLeft3" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="518.0" layoutY="394.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor2_doorRight3" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="574.0" layoutY="394.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor3_doorLeft3" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="518.0" layoutY="274.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor3_doorRight3" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="574.0" layoutY="274.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor4_doorLeft3" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="518.0" layoutY="154.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor4_doorRight3" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="574.0" layoutY="154.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor5_doorLeft2" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="406.0" layoutY="34.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor5_doorRight2" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="462.0" layoutY="34.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor5_doorLeft3" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="518.0" layoutY="34.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle fx:id="floor5_doorRight3" arcHeight="5.0" arcWidth="5.0" fill="#d5d5d5" height="91.0" layoutX="574.0" layoutY="34.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="57.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="592.0" layoutX="602.0" layoutY="12.0" stroke="WHITE" strokeType="INSIDE" width="60.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="592.0" layoutX="488.0" layoutY="12.0" stroke="WHITE" strokeType="INSIDE" width="57.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="592.0" layoutX="379.0" layoutY="12.0" stroke="WHITE" strokeType="INSIDE" width="57.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="592.0" layoutX="264.0" layoutY="12.0" stroke="WHITE" strokeType="INSIDE" width="57.0" />
+      <Line endX="378.33331298828125" endY="33.0" layoutX="284.0" layoutY="452.0" startX="-290.0" startY="33.0" />
+      <Line endX="365.0" endY="33.0" layoutX="298.0" layoutY="332.0" startX="-298.0" startY="33.0" />
+      <Line endX="391.0" endY="33.0" layoutX="272.0" layoutY="212.0" startX="-290.0" startY="33.0" />
+      <Line endX="384.33331298828125" endY="33.0" layoutX="280.0" layoutY="92.0" startX="-290.0" startY="33.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="323.0" layoutY="401.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="380.0" layoutY="401.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="438.0" layoutY="401.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="489.0" layoutY="401.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="546.0" layoutY="401.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="604.0" layoutY="401.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="604.0" layoutY="281.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="546.0" layoutY="281.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="490.0" layoutY="280.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="437.0" layoutY="280.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="380.0" layoutY="281.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="322.0" layoutY="281.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="323.0" layoutY="161.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="380.0" layoutY="161.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="437.0" layoutY="161.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="490.0" layoutY="161.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="547.0" layoutY="161.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="603.0" layoutY="161.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="323.0" layoutY="41.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="380.0" layoutY="41.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="437.0" layoutY="41.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="490.0" layoutY="41.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="547.0" layoutY="41.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="604.0" layoutY="41.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="438.0" layoutY="520.0" startX="-1.5" startY="-6.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d8d8d8" height="603.0" layoutX="670.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" width="179.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="490.0" layoutY="520.0" startX="-1.5" startY="-5.0" />
+      <Text fx:id="totalRiders" layoutX="680.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Riders: 0" />
+      <Text layoutX="711.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current" />
+      <Text layoutX="796.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="14.873046875" />
+      <Text layoutX="762.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total" />
+      <Text layoutX="678.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Floor 1" />
+      <Text layoutX="678.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Floor 2" />
+      <Text layoutX="678.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Floor 3" />
+      <Text layoutX="678.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Floor 4" />
+      <Text layoutX="678.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Floor 5" />
+      <Text fx:id="averageWaitLabel" layoutX="679.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average Wait: 0 seconds" />
+      <Text fx:id="longestWaitLabel" layoutX="680.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Longest Wait: 0 seconds" />
+      <Text fx:id="el1Riders" layoutX="675.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Elevator 1 (0 Riders)" />
+      <Text fx:id="el2Riders" layoutX="676.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Elevator 2 (0 Riders)" />
+      <Text fx:id="el3Riders" layoutX="676.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Elevator 3 (0 Riders)" />
+      <Text fx:id="el1Flr" layoutX="693.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Floor: 1" />
+      <Text fx:id="el1Wgt" layoutX="693.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Weight: 0 lbs" />
+      <Text fx:id="el2Flr" layoutX="693.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Floor: 1" />
+      <Text fx:id="el2Wgt" layoutX="693.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Weight: 0 lbs" />
+      <Text fx:id="el3Flr" layoutX="693.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Floor: 1" />
+      <Text fx:id="el3Wgt" layoutX="693.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Weight: 0 lbs" />
+      <Text fx:id="floor1Cur" layoutX="728.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor1Tot" layoutX="769.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor1Pct" layoutX="798.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor5Cur" layoutX="728.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor5Tot" layoutX="769.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor5Pct" layoutX="798.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor4Cur" layoutX="728.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor4Tot" layoutX="769.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor4Pct" layoutX="798.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor3Cur" layoutX="728.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor3Tot" layoutX="769.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor3Pct" layoutX="798.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor2Cur" layoutX="728.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor2Tot" layoutX="769.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text fx:id="floor2Pct" layoutX="798.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Line endX="-1.5" endY="84.0" layoutX="603.0" layoutY="521.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="547.0" layoutY="521.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="379.0" layoutY="521.0" startX="-1.5" startY="-6.0" />
+      <Line endX="-1.5" endY="84.0" layoutX="323.0" layoutY="521.0" startX="-1.5" startY="-6.0" />
+      <Polyline fill="#f0ecc5" layoutX="360.0" layoutY="528.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="349.0" layoutY="396.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="368.0" layoutY="409.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="351.0" layoutY="274.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="370.0" layoutY="288.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="349.0" layoutY="153.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="368.0" layoutY="167.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="463.0" layoutY="396.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="483.0" layoutY="408.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="574.0" layoutY="393.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="593.0" layoutY="408.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="573.0" layoutY="274.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="592.0" layoutY="288.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="461.0" layoutY="274.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="480.0" layoutY="288.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="572.0" layoutY="153.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="591.0" layoutY="167.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="464.0" layoutY="153.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="483.0" layoutY="168.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="473.0" layoutY="528.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="585.0" layoutY="529.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="359.0" layoutY="33.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="471.0" layoutY="34.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fill="#f0ecc5" layoutX="582.0" layoutY="34.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Text layoutX="17.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
+      <Text layoutX="43.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
+      <Text layoutX="69.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
+      <Text layoutX="30.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+      <Text layoutX="55.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R" />
+      <Text layoutX="17.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
+      <Text layoutX="43.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
+      <Text layoutX="69.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+      <Text layoutX="30.0" layoutY="562.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
+      <Text layoutX="55.0" layoutY="562.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R" />
+      <Text layoutX="17.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
+      <Text layoutX="43.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
+      <Text layoutX="69.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+      <Text layoutX="30.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
+      <Text layoutX="55.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R" />
+      <Text layoutX="17.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
+      <Text layoutX="43.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
+      <Text layoutX="69.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+      <Text layoutX="30.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
+      <Text layoutX="55.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R" />
+      <Text layoutX="17.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
+      <Text layoutX="43.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
+      <Text layoutX="69.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
+      <Text layoutX="30.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
+      <Text layoutX="55.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R" />
+      <Circle fx:id="f5b1" fill="#ffe99f47" layoutX="20.0" layoutY="57.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f4b1" fill="#ffe99f47" layoutX="20.0" layoutY="180.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f4b2" fill="#ffe99f47" layoutX="46.0" layoutY="180.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f4b3" fill="#ffe99f47" layoutX="72.0" layoutY="180.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f4b5" fill="#ffe99f47" layoutX="33.0" layoutY="202.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f4bR" fill="#ffe99f47" layoutX="59.0" layoutY="202.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f3b1" fill="#ffe99f47" layoutX="20.0" layoutY="298.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f3b2" fill="#ffe99f47" layoutX="46.0" layoutY="298.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f3b4" fill="#ffe99f47" layoutX="72.0" layoutY="298.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f3b5" fill="#ffe99f47" layoutX="33.0" layoutY="320.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f3bR" fill="#ffe99f47" layoutX="59.0" layoutY="320.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f2b1" fill="#ffe99f47" layoutX="20.0" layoutY="415.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f2b3" fill="#ffe99f47" layoutX="46.0" layoutY="415.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f2b4" fill="#ffe99f47" layoutX="72.0" layoutY="415.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f2b5" fill="#ffe99f47" layoutX="33.0" layoutY="437.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f2bR" fill="#ffe99f47" layoutX="59.0" layoutY="437.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f1b2" fill="#ffe99f47" layoutX="20.0" layoutY="536.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f1b3" fill="#ffe99f47" layoutX="46.0" layoutY="536.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f1b4" fill="#ffe99f47" layoutX="72.0" layoutY="536.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f1b5" fill="#ffe99f47" layoutX="33.0" layoutY="558.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f1bR" fill="#ffe99f47" layoutX="59.0" layoutY="558.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f5b2" fill="#ffe99f47" layoutX="46.0" layoutY="57.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f5b3" fill="#ffe99f47" layoutX="72.0" layoutY="57.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f5b4" fill="#ffe99f47" layoutX="33.0" layoutY="79.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f5bR" fill="#ffe99f47" layoutX="59.0" layoutY="79.0" onMouseClicked="#onFloorButtonClick" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </Pane>

@@ -75,9 +75,9 @@ class ElevatorCar
 //      System.out.println("door open " + doorOpen.getChildren());
 //    System.out.println("left door node " + leftDoorOpen.getNode());
              leftDoorOpen.setDuration(Duration.seconds(3));
-             leftDoorOpen.setToX(-60);
+             leftDoorOpen.setToX(-30);
              rightDoorOpen.setDuration(Duration.seconds(3));
-             rightDoorOpen.setToX(68);
+             rightDoorOpen.setToX(30);
              doorOpen = new ParallelTransition(leftDoorOpen, rightDoorOpen);
 
              doorOpen.play();
@@ -91,7 +91,7 @@ class ElevatorCar
 
                      for (Rider passenger : travelingRiders) {//let people out
                          if (passenger.endFloor == currentFloor) {
-                             passenger.leaveElevator();
+                             passenger.walkFromElevator();
                              leavingRiders.add(passenger);
                              setCarWeight(-passenger.weight);
                          }
@@ -99,14 +99,14 @@ class ElevatorCar
                      }
 
                      travelingRiders.removeAll(leavingRiders);
-
+                    Controller.updateTravellers(Controller.travellersCount);
                      if (Controller.floorQueues.get(currentFloor-1).isEmpty()){//if no one waiting on that floor, close
                          //System.out.println("there's no one waiting");
                          closeDoors();
                      } else {
                          //System.out.println("there's a line");
 
-                         Controller.boarding(currentFloor);
+                         Controller.boarding(currentFloor,Controller.queueCountsCurrent,Controller.travellersCount);
                      }
                  }
              });
@@ -161,7 +161,7 @@ class ElevatorCar
         return carWeight;
     }
     void setStandingRoom(){
-        standingRoom+=25;
+        standingRoom+=10;
     }
     int getStandingRoom(){
         return standingRoom;
@@ -200,6 +200,7 @@ class ElevatorCar
         Collections.sort(floorStops);
         //System.out.println(floorStops);
         final int passengerFloor;
+        int displacement = currentFloor-moveToFloor;
         if (travelingRiders.size()==0){
             passengerFloor=moveToFloor;
         } else {
@@ -215,19 +216,25 @@ class ElevatorCar
 
         }
         int floorYVal;
-        int rFloorYVal;
         switch(passengerFloor){
             case 1:
                 floorYVal = 0;
-                rFloorYVal = 297;
                 break;
             case 2:
-                floorYVal = -297;
-                rFloorYVal = -297;
+                floorYVal = -120;
                 break;
+            case 3:
+                floorYVal = -240;
+                break;
+            case 4:
+                floorYVal = -360;
+                break;
+            case 5:
+                floorYVal = -480;
+                break;
+
             default:
                 floorYVal = 0;
-                rFloorYVal=0;
         }
        // Collections.sort(floorStops,Collections.reverseOrder());
 //        if (floorYVal == -297){
@@ -240,6 +247,8 @@ class ElevatorCar
         elevatorMove.setToY(floorYVal);
         ArrayList<TranslateTransition> ttArray = new ArrayList<TranslateTransition>();
         ArrayList<TranslateTransition> flArray = new ArrayList<TranslateTransition>();
+        ArrayList<TranslateTransition> tlArray = new ArrayList<TranslateTransition>();
+
 
         int travellerCount=0;
         ParallelTransition ridersMove = new ParallelTransition();
@@ -247,13 +256,18 @@ class ElevatorCar
             ttArray.add(new TranslateTransition());
             ttArray.get(travellerCount).setNode(riders.riderAni);
             ttArray.get(travellerCount).setDuration(Duration.seconds(5));
-            ttArray.get(travellerCount).setToY(rFloorYVal);
+            ttArray.get(travellerCount).setToY(120*displacement);
             flArray.add(new TranslateTransition());
             flArray.get(travellerCount).setNode(riders.floorLabel);
             flArray.get(travellerCount).setDuration(Duration.seconds(5));
-            flArray.get(travellerCount).setToY(rFloorYVal);
+            flArray.get(travellerCount).setToY(120*displacement);
+            tlArray.add(new TranslateTransition());
+            tlArray.get(travellerCount).setNode(riders.timerLabel);
+            tlArray.get(travellerCount).setDuration(Duration.seconds(5));
+            tlArray.get(travellerCount).setToY(120*displacement);
             ridersMove.getChildren().add(ttArray.get(travellerCount));
             ridersMove.getChildren().add(flArray.get(travellerCount));
+            ridersMove.getChildren().add(tlArray.get(travellerCount));
 
             travellerCount++;
         }
@@ -267,7 +281,7 @@ class ElevatorCar
 
                // System.out.println(floorStops.contains(passengerFloor));
                 //status=Status.WAITING;
-            System.out.println("How many times");
+                Controller.updateTravellers(Controller.travellersCount);
                 openDoors();
         }
         });
