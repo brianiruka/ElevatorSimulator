@@ -3,10 +3,13 @@ package sample;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import java.text.DecimalFormat;
 import java.util.*;
+import javafx.scene.control.ToggleButton;
+import static java.util.Arrays.asList;
 
 public class Controller {
     @FXML private Pane myPane;
@@ -21,19 +24,20 @@ public class Controller {
     @FXML private Text floor1Pct,floor2Pct,floor3Pct,floor4Pct,floor5Pct;
     @FXML private Text el1Riders,el1Flr,el1Wgt,el2Riders,el2Flr,el2Wgt,el3Riders,el3Flr,el3Wgt;
     @FXML  private Text totalRiders,averageWaitLabel,longestWaitLabel;
-
-    static ArrayList<LinkedList<Rider>> floorQueues;
+    @FXML private ToggleButton startSim;
+//    @FXML private Polyline triangle1LU;
+    @FXML  private Text ec1NextStops,ec2NextStops,ec3NextStops,needUP,needDOWN;
     private ArrayList<Rectangle> shaft1 = new ArrayList<Rectangle>();//holds all elevator doors of a shaft
     private ArrayList<Rectangle> shaft2 = new ArrayList<Rectangle>();//holds all elevator doors of a shaft
     private ArrayList<Rectangle> shaft3 = new ArrayList<Rectangle>();//holds all elevator doors of a shaft
-    static ArrayList<Integer> queueOffsets;
     static ArrayList<Text> queueCountsCurrent=new ArrayList<Text>(5);
-    static ArrayList<Integer> queueCountsTotal=new ArrayList<Integer>(5);
     static ArrayList<Text> travellersCount=new ArrayList<Text>(9);
     static Text awl;
     static Text lw;
-
-    static Double totalRidersNum = 0.0;
+    static ArrayList<Integer> upRequests=new ArrayList<Integer>(5);
+    static ArrayList<Integer> downRequests=new ArrayList<Integer>(5);
+    static ArrayList<Text> floorStopLabels = new ArrayList<Text>();
+    static Double allFloorJobsTotal = 0.0;
 
     static ElevatorCar ec1,ec2,ec3;
     static int averageWait=0;
@@ -41,28 +45,25 @@ public class Controller {
     static int totalWait=0;
     static int longestWait=0;
 
-
+    static Floor floor1 = new Floor();
+    static Floor floor2 = new Floor();
+    static Floor floor3 = new Floor();
+    static Floor floor4 = new Floor();
+    static Floor floor5 = new Floor();
+    static List<Floor> floorsList = asList(floor1,floor2,floor3,floor4,floor5);
+    //ArrayList<Floor> floorsArray = new ArrayList<Floor>(floorsList);
 
     @FXML
     public void initialize(){
         //method runs after javafx scene is initialized
-        floorQueues = new ArrayList<LinkedList<Rider>>();
-        queueOffsets = new ArrayList<Integer>();
-        for (int i = 0;i<5;i++){
-            floorQueues.add(new LinkedList<Rider>());
-            queueOffsets.add(0);
-        }
+
         shaft1.addAll(Arrays.asList(floor1_doorLeft1,floor1_doorRight1,floor2_doorLeft1,floor2_doorRight1,
                 floor3_doorLeft1,floor3_doorRight1,floor4_doorLeft1,floor4_doorRight1,floor5_doorLeft1,floor5_doorRight1));
         shaft2.addAll(Arrays.asList(floor1_doorLeft2,floor1_doorRight2,floor2_doorLeft2,floor2_doorRight2,
                 floor3_doorLeft2,floor3_doorRight2,floor4_doorLeft2,floor4_doorRight2,floor5_doorLeft2,floor5_doorRight2));
         shaft3.addAll(Arrays.asList(floor1_doorLeft3,floor1_doorRight3,floor2_doorLeft3,floor2_doorRight3,
                 floor3_doorLeft3,floor3_doorRight3,floor4_doorLeft3,floor4_doorRight3,floor5_doorLeft3,floor5_doorRight3));
-        queueCountsTotal.add(0);
-        queueCountsTotal.add(0);
-        queueCountsTotal.add(0);
-        queueCountsTotal.add(0);
-        queueCountsTotal.add(0);
+
         queueCountsCurrent.add(floor1Cur);
         queueCountsCurrent.add(floor2Cur);
         queueCountsCurrent.add(floor3Cur);
@@ -77,77 +78,175 @@ public class Controller {
         travellersCount.add(el3Riders);
         travellersCount.add(el3Flr);
         travellersCount.add(el3Wgt);
-        ec1= new ElevatorCar(car1 , shaft1);
-        ec2= new ElevatorCar(car2 , shaft2);
-        ec3= new ElevatorCar(car3 , shaft3);
+        ec1= new ElevatorCar(car1 , shaft1,315,"car1",1,0);
+        ec2= new ElevatorCar(car2 , shaft2,425,"car2",3,4);
+        ec3= new ElevatorCar(car3 , shaft3,540,"car3",5,8);
+        //ec3=ec2=ec1;
         updateQueues(queueCountsCurrent);
         awl = averageWaitLabel;
         lw=longestWaitLabel;
+        floorStopLabels.add(ec1NextStops);
+        floorStopLabels.add(ec2NextStops);
+        floorStopLabels.add(ec3NextStops);
+        floorStopLabels.add(needUP);
+        floorStopLabels.add(needDOWN);
+    }
 
+    @FXML protected void simTimer(MouseEvent actionEvent) {
+        int fromFloor= (int)(Math.random()*5+1);
+        addRider(fromFloor,27);
     }
 
     @FXML protected void onFloorButtonClick(MouseEvent actionEvent) {
         String id =actionEvent.getPickResult().getIntersectedNode().getId();
         int fromFloor = Character.getNumericValue(id.charAt(1));
         int toFloor = Character.getNumericValue(id.charAt(3));
+        addRider(fromFloor,toFloor);
+        }
 
+    void addRider(int ff,int tf){
+        int fromFloor = ff;
+        int toFloor = tf;
         while (toFloor ==27||toFloor==fromFloor){
             toFloor = (int)(Math.random()*5+1);
         }
-        floorQueues.get(fromFloor-1).add(new Rider(myPane,100,fromFloor,toFloor,0));
-        queueCountsTotal.set(fromFloor-1,queueCountsTotal.get(fromFloor-1)+1);
-        totalRidersNum++;
-        totalRiders.setText("Total Riders: "+totalRidersNum.intValue());
+        floorsList.get(fromFloor-1).ridersInQueue.add(new Rider(myPane,100,fromFloor,toFloor,0));
+        floorsList.get(fromFloor-1).floorJobsTotal++;
+        allFloorJobsTotal++;
+        totalRiders.setText("Total Riders: "+allFloorJobsTotal.intValue());
         DecimalFormat df2 = new DecimalFormat(".##");
-        Double divisionResult = 0.0;
-        floor1Tot.setText(queueCountsTotal.get(0).toString());
-        floor2Tot.setText(queueCountsTotal.get(1).toString());
-        floor3Tot.setText(queueCountsTotal.get(2).toString());
-        floor4Tot.setText(queueCountsTotal.get(3).toString());
-        floor5Tot.setText(queueCountsTotal.get(4).toString());
+        Double divisionResult;
+        floor1Tot.setText(((Integer) floorsList.get(0).floorJobsTotal).toString());
+        floor2Tot.setText(((Integer) floorsList.get(1).floorJobsTotal).toString());
+        floor3Tot.setText(((Integer) floorsList.get(2).floorJobsTotal).toString());
+        floor4Tot.setText(((Integer) floorsList.get(3).floorJobsTotal).toString());
+        floor5Tot.setText(((Integer) floorsList.get(4).floorJobsTotal).toString());
         updateQueues(queueCountsCurrent);
 
-        divisionResult = (queueCountsTotal.get(0)/totalRidersNum)*100;
+        divisionResult = (((Integer) floorsList.get(0).floorJobsTotal)/allFloorJobsTotal)*100;
         floor1Pct.setText(df2.format(divisionResult)+"%");
-        divisionResult = (queueCountsTotal.get(1)/totalRidersNum)*100;
+        divisionResult = (((Integer) floorsList.get(1).floorJobsTotal)/allFloorJobsTotal)*100;
         floor2Pct.setText(df2.format(divisionResult)+"%");
-        divisionResult = (queueCountsTotal.get(2)/totalRidersNum)*100;
+        divisionResult = (((Integer) floorsList.get(2).floorJobsTotal)/allFloorJobsTotal)*100;
         floor3Pct.setText(df2.format(divisionResult)+"%");
-        divisionResult = (queueCountsTotal.get(3)/totalRidersNum)*100;
+        divisionResult = (((Integer) floorsList.get(3).floorJobsTotal)/allFloorJobsTotal)*100;
         floor4Pct.setText(df2.format(divisionResult)+"%");
-        divisionResult = (queueCountsTotal.get(4)/totalRidersNum)*100;
+        divisionResult = (((Integer) floorsList.get(4).floorJobsTotal)/allFloorJobsTotal)*100;
         floor5Pct.setText(df2.format(divisionResult)+"%");
 
-        if (ec1.currentFloor == floorQueues.get(fromFloor-1).getLast().startFloor && (ec1.status.toString()=="OPEN")){
-            floorQueues.get(fromFloor-1).getLast().enterElevator(ec1);
-            boarding(fromFloor,queueCountsCurrent,travellersCount);
-        } else {
-            //System.out.println(ec1.status);
-            floorQueues.get(fromFloor-1).getLast().walkToQueue(floorQueues.get(fromFloor-1));
-            queueOffsets.set(fromFloor-1,queueOffsets.get(fromFloor-1)+10);//adjusts x distance to behind second to last person in line
-        }
+        floorsList.get(fromFloor-1).ridersInQueue.getLast().walkToQueue(floorsList.get(fromFloor-1).ridersInQueue);
+        floorsList.get(fromFloor-1).queueOffset += 10;//adjusts x distance to behind second to last person in line
     }
 
-    static void getElevator(int startFloor,String riderDir){
+     void getElevator(int startFloor,String riderDir){
         //find current closest elevator
-//        ElevatorCar closestCar = null;
-//        ArrayList<ElevatorCar> carsByDistance = new ArrayList<ElevatorCar>();
-//
-//        int smallestDiff = 10;
-//        int carDist1=Math.abs(startFloor-ec1.currentFloor);
-//        int carDist2=Math.abs(startFloor-ec2.currentFloor);
-//        int carDist3=Math.abs(startFloor-ec3.currentFloor);
+        ElevatorCar closestCar = null;
+        ElevatorCar nextClosestCar = null;
+        ElevatorCar furthestCar = null;
+
+        int carDist1=Math.abs(startFloor-ec1.currentFloor);
+        int carDist2=Math.abs(startFloor-ec2.currentFloor);
+        int carDist3=Math.abs(startFloor-ec3.currentFloor);
+
+        Map<ElevatorCar, Integer> map = new HashMap<ElevatorCar, Integer>();
+        map.put(ec1, carDist1);
+        map.put(ec2, carDist2);
+        map.put(ec3, carDist3);
+
+        Set<Map.Entry<ElevatorCar, Integer>> set = map.entrySet();
+        List<Map.Entry<ElevatorCar, Integer>> list = new ArrayList<Map.Entry<ElevatorCar, Integer>>(set);
+        Collections.sort( list, new Comparator<Map.Entry<ElevatorCar, Integer>>()
+        {
+            public int compare( Map.Entry<ElevatorCar, Integer> o1, Map.Entry<ElevatorCar, Integer> o2 )
+            {
+                return (o2.getValue()).compareTo( o1.getValue() );
+            }
+        } );
+
+        furthestCar=list.get(0).getKey();
+        nextClosestCar=list.get(1).getKey();
+        closestCar=list.get(2).getKey();
 
 
+        System.out.println(riderDir + " REQUESTED!!!");
+        if(closestCar.status==Status.WAITING){
+            closestCar.currentDirection=riderDir;
+            if (riderDir.equals("UP") && !upRequests.contains(startFloor)){
+                upRequests.add(startFloor);
+//                for (int i = closestCar.currentFloor+1;i<=startFloor;i++){
+//                    if (upRequests.contains(i))
+//                            closestCar.callElevator(i);
+//                }
+            } else if (riderDir.equals("DOWN") && !downRequests.contains(startFloor)){
+                downRequests.add(startFloor);
+            }
+            closestCar.callElevator(startFloor);//if ec waiting, immediately go to floor
 
-        if(ec1.status==Status.WAITING){
-            ec1.callElevator(startFloor);//if ec waiting, immediately go to floor
+            closestCar.updateLabels();
 
         }
-            ec1.addPickupFloor(startFloor);//if busy, add to floors to pick up from
+//        else if(closestCar.currentDirection==riderDir && !closestCar.getDropOffFloor().contains(startFloor)
+//                &&closestCar.status!=Status.WAITING && isHeadedThatWay(closestCar.currentDirection, startFloor,
+//                closestCar.currentFloor)&&closestCar.getCarWeight()<500){
+//
+//            closestCar.addDropOffFloor(startFloor);//if ec waiting, immediately go to floor
+//        }
+        else
+            if(nextClosestCar.status==Status.WAITING){
+            nextClosestCar.currentDirection=riderDir;
+            if (riderDir.equals("UP") && !upRequests.contains(startFloor)){
+                upRequests.add(startFloor);
+            } else if (riderDir.equals("DOWN") && !downRequests.contains(startFloor)){
+                downRequests.add(startFloor);
+            }
+            nextClosestCar.callElevator(startFloor);//if ec waiting, immediately go to floor
+
+            nextClosestCar.updateLabels();
+        }
 
 
-        //check if it's waiting
+//        else if(nextClosestCar.currentDirection==riderDir&& !nextClosestCar.getDropOffFloor().contains(startFloor)
+//                &&nextClosestCar.status!=Status.WAITING && isHeadedThatWay(nextClosestCar.currentDirection, startFloor,
+//                nextClosestCar.currentFloor)&&nextClosestCar.getCarWeight()<500){
+//            nextClosestCar.addDropOffFloor(startFloor);//if ec waiting, immediately go to floor
+//        }
+        else
+
+            if(furthestCar.status==Status.WAITING){
+            furthestCar.currentDirection=riderDir;
+            if (riderDir.equals("UP") && !upRequests.contains(startFloor)){
+                floorsList.get(startFloor-1).upButtonActive = true;
+                upRequests.add(startFloor);
+            } else if (riderDir.equals("DOWN") && !downRequests.contains(startFloor)){
+                floorsList.get(startFloor-1).downButtonActive = true;
+                downRequests.add(startFloor);
+            }
+             if (riderDir.equals("UP") && upRequests.contains(startFloor)){
+                floorsList.get(startFloor-1).upButtonActive = true;
+            } else if (riderDir.equals("DOWN") && downRequests.contains(startFloor)){
+                floorsList.get(startFloor-1).downButtonActive = true;
+            }
+            furthestCar.callElevator(startFloor);//if ec waiting, immediately go to floor
+
+
+        furthestCar.updateLabels();
+        }
+//        else if(furthestCar.currentDirection==riderDir && !furthestCar.getDropOffFloor().contains(startFloor)
+//                && furthestCar.status!=Status.WAITING && isHeadedThatWay(furthestCar.currentDirection, startFloor, furthestCar.currentFloor)&&furthestCar.getCarWeight()<500){
+//            furthestCar.addDropOffFloor(startFloor);//if ec waiting, immediately go to floor
+//        }
+        else {
+            //System.out.println(startFloor+ " STILL NEEDS SERVICING");
+            if (riderDir.equals("UP") && !upRequests.contains(startFloor)){
+                floorsList.get(startFloor-1).upButtonActive = true;
+                upRequests.add(startFloor);
+            } else if (riderDir.equals("DOWN") && !downRequests.contains(startFloor)){
+                floorsList.get(startFloor-1).downButtonActive = true;
+                downRequests.add(startFloor);
+            }
+        }
+
+         //check if it's waiting
 
         //if not waiting, check if it's headed in direction passenger is headed, not at capacity
 
@@ -157,51 +256,53 @@ public class Controller {
         //if no floor is found, keep in buffer until an elevator becomes empty, changes direction
     }
 
-     static void boarding(int currentFloor, ArrayList<Text> queuesCurr,ArrayList<Text> travellersCount){
-        //handles boarding of a newly arrived elevator
-        //ec.setCarWeight(wR.getFirst().weight);
-        //int waiterAmt = waitingRiders.size();
-            //System.out.println(waitingRiders);
-         queueOffsets.set(currentFloor-1,0);
-            for (Rider passenger: floorQueues.get(currentFloor-1)){
-                if (ec1.getCarWeight()<400 && (ec1.currentFloor==passenger.startFloor)) {
-                    queueOffsets.set(currentFloor-1,0);
-                    passenger.enterElevator(ec1);
-                    ec1.setCarWeight(passenger.weight);
-                    ec1.setStandingRoom();
-                    ec1.travelingRiders.add(passenger);
-//                    if (waiterAmt>1){
-//                        waiterAmt--;
-//                        //System.out.println("should be running");
-//                    }
-                } else {
+      void boarding(ElevatorCar ec,int currentFloor, ArrayList<Text> queuesCurr,ArrayList<Text> travellersCount){
+        LinkedList<Rider> thisQueue = floorsList.get(currentFloor-1).ridersInQueue;
+        int thisOffset = floorsList.get(currentFloor-1).queueOffset;
+         floorsList.get(currentFloor-1).queueOffset=0;
+            for (Rider passenger: thisQueue){
+                if (passenger.direction.equals(ec.currentDirection)){
+                if (ec.getCarWeight()<500 && (ec.currentFloor==passenger.startFloor)) {
+                    passenger.enterElevator(ec);
+                    ec.setCarWeight(passenger.weight);
+                    ec.setStandingRoom();
+                    ec.travelingRiders.add(passenger);
 
-                    passenger.walkToQueue(floorQueues.get(passenger.startFloor-1));
-                    queueOffsets.set(currentFloor-1,queueOffsets.get(currentFloor-1)+10);
+                    if(!ec.getDropOffFloor().contains(passenger.endFloor)){
+                        ec.addDropOffFloor(passenger.endFloor);
+                    }
+                } else {//going in el. direction but already full
+                    if(ec.travelingRiders.size()>0){
+                        passenger.walkToQueue(thisQueue);
+                    }
+                    thisOffset+=10;
                 }
 
-                if(!ec1.getDropOffFloor().contains(floorQueues.get(currentFloor-1).getFirst().endFloor)){
-                    //System.out.println(waitingRiders.getFirst().endFloor);
-                    ec1.addDropOffFloor(floorQueues.get(currentFloor-1).getLast().endFloor);
+            } else {//not going in elevator direction
+                    if(ec.travelingRiders.size()>0){
+                        passenger.walkToQueue(floorsList.get(passenger.startFloor-1).ridersInQueue);
+                    }
+                    floorsList.get(currentFloor-1).queueOffset += 10;
                 }
-
             }
-         //closeDoorButton(ec1);
-         floorQueues.get(currentFloor-1).removeAll(ec1.travelingRiders);//can't remove boarded passengers from queue during for each loop, so after concludes remove travelingpassengers
-         if (floorQueues.get(currentFloor-1).isEmpty()){
-             ec1.getPickUpFloor().remove((Object)currentFloor);
+            floorsList.get(currentFloor-1).ridersInQueue.removeAll(ec.travelingRiders);//can't remove boarded passengers from queue during for each loop, so after concludes remove traveling passengers
+         if (floorsList.get(currentFloor-1).ridersInQueue.isEmpty()){//if no one in queue, remove from floors to pick up from
          }
          updateQueues(queuesCurr);
          updateTravellers(travellersCount);
+          if (floorsList.get(currentFloor-1).ridersInQueue.isEmpty()){
+              if (upRequests.contains(currentFloor)){
+                  upRequests.remove((Integer)currentFloor);
+              } else if (downRequests.contains(currentFloor)){
+                  downRequests.remove((Integer)currentFloor);
+              }
+          }
      }
-      static void updateQueues(ArrayList<Text> current){
-          current.get(0).setText(((Integer)(floorQueues.get(0).size())).toString());
-          current.get(1).setText(((Integer)(floorQueues.get(1).size())).toString());
-          current.get(2).setText(((Integer)(floorQueues.get(2).size())).toString());
-          current.get(3).setText(((Integer)(floorQueues.get(3).size())).toString());
-          current.get(4).setText(((Integer)(floorQueues.get(4).size())).toString());
+
+
+       void updateQueues(ArrayList<Text> current){//updates the # of people in each queue on GUI
     }
-    static void updateTravellers(ArrayList<Text> travellers){
+     void updateTravellers(ArrayList<Text> travellers){
         travellers.get(0).setText("Elevator 1 ("+((Integer)(ec1.travelingRiders.size())).toString()+" Riders)");
         travellers.get(1).setText("Current Floor: "+((Integer)(ec1.currentFloor)).toString());
         travellers.get(2).setText("Current Weight: "+((Integer)(ec1.getCarWeight())).toString()+" lbs");
@@ -213,19 +314,22 @@ public class Controller {
         travellers.get(8).setText("Current Weight: "+((Integer)(ec3.getCarWeight())).toString()+" lbs");
     }
 
-    static void closeDoorButton(ElevatorCar ec){
-        ec.closeDoors();
-    }
 
-     static LinkedList<Rider> getWaitingRiders(int startingFloor){
-        return floorQueues.get(startingFloor-1);
+      LinkedList<Rider> getWaitingRiders(int startingFloor){
+        return floorsList.get(startingFloor-1).ridersInQueue;
     }
-    static void getAverageWait(int wait,int indWait){
+     void getAverageWait(int wait,int indWait){
 
         awl.setText("Average Wait: "+wait+" seconds");
         if (indWait>longestWait){
             longestWait=indWait;
             lw.setText("Longest Wait: "+longestWait+" seconds");
+        }
+
+    }
+
+    void addInstances(){
+        for (int i = 0;i<5;i++){
         }
 
     }
