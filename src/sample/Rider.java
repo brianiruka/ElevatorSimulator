@@ -25,10 +25,10 @@ public class Rider extends Pane
      private int waitDuration;
      ImageView riderAni;
      File file1;
-     File file2= new File("src/sample/waiting1.png");
-     Image image2 = new Image(file2.toURI().toString());
-     File file3= new File("src/sample/riding1.png");
-     Image image3= new Image(file3.toURI().toString());
+     File file2;
+     Image image2;
+     File file3;
+     Image image3;
      Image image;
      Text floorLabel= new Text();
     Text timerLabel= new Text();
@@ -65,29 +65,40 @@ public class Rider extends Pane
             default:
                 initYVal = 550.0;
         }
-//        switch (startFloor) {
-//            case 1:          file1 = new File("src/sample/rider_red.gif");
-//
-//                break;
-//            case 2:          file1 = new File("src/sample/rider_orange.gif");
-//
-//                break;
-//            case 3:          file1 = new File("src/sample/rider_yellow.gif");
-//
-//                break;
-//            case 4:          file1 = new File("src/sample/rider_green.gif");
-//
-//                break;
-//            case 5:          file1 = new File("src/sample/rider_blue.gif");
-//
-//                break;
-//
-//            default:         file1 = new File("src/sample/rider1.gif");
-//
-//                break;
-//        }
-        file1 = new File("src/sample/rider_blue.gif");
+        switch (endFloor) {
+            case 1:          file1 = new File("src/sample/rider_red.gif");
+                 file2 = new File("src/sample/waiting_red.png");
+                 file3 = new File("src/sample/riding_red.png");
+                break;
+            case 2:          file1 = new File("src/sample/rider_green.gif");
+                file2 = new File("src/sample/waiting_green.png");
+                file3 = new File("src/sample/riding_green.png");
+
+                break;
+            case 3:          file1 = new File("src/sample/rider_yellow.gif");
+                file2 = new File("src/sample/waiting_yellow.png");
+                file3 = new File("src/sample/riding_yellow.png");
+
+                break;
+            case 4:          file1 = new File("src/sample/rider_blue.gif");
+                file2 = new File("src/sample/waiting_blue.png");
+                file3 = new File("src/sample/riding_blue.png");
+
+                break;
+            case 5:          file1 = new File("src/sample/rider_orange.gif");
+                file2 = new File("src/sample/waiting_orange.png");
+                file3 = new File("src/sample/riding_orange.png");
+
+                break;
+
+            default:         file1 = new File("src/sample/rider1.gif");
+
+                break;
+        }
+
         image = new Image(file1.toURI().toString());
+        image2 = new Image(file2.toURI().toString());
+        image3 = new Image(file3.toURI().toString());
         riderAni = new ImageView(image);
         riderAni.setFitHeight(60.0);
         riderAni.setFitWidth(30.0);

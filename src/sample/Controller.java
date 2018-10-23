@@ -1,8 +1,12 @@
 package sample;
 
+
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -97,10 +101,73 @@ public class Controller {
         addRider(fromFloor,27);
     }
 
+
+
+    @FXML
+    void onHoverOff(MouseEvent actionEvent) {
+        Circle circle = (Circle) actionEvent.getTarget();
+        circle.setFill(Color.TRANSPARENT);
+
+    }
+
+    @FXML
+    void onHoverOn(MouseEvent actionEvent) {
+        String id =actionEvent.getPickResult().getIntersectedNode().getId();
+        Circle circle = (Circle) myPane.lookup('#'+id);
+
+        int toFloor = Character.getNumericValue(id.charAt(3));
+
+        switch(toFloor){
+            case 1:
+                circle.setFill(Color.web("#ff00007c"));
+                break;
+            case 2:
+                circle.setFill(Color.web("#00ff007c"));
+                break;
+            case 3:
+                circle.setFill(Color.web("#fffb007c"));
+                break;
+            case 4:
+                circle.setFill(Color.web("#0000ff7c"));
+                break;
+            case 5:
+                circle.setFill(Color.web("#ffa6007c"));
+                break;
+            default:
+                circle.setFill(Color.web("#00000000"));
+        }
+    }
+
+
     @FXML protected void onFloorButtonClick(MouseEvent actionEvent) {
         String id =actionEvent.getPickResult().getIntersectedNode().getId();
+        Circle circle = (Circle) myPane.lookup('#'+id);
+
+
+        circle.setFill(Color.web("#ff00007c"));
         int fromFloor = Character.getNumericValue(id.charAt(1));
         int toFloor = Character.getNumericValue(id.charAt(3));
+
+
+        switch(toFloor){
+            case 1:
+                circle.setFill(Color.web("#ff00007c"));
+                break;
+            case 2:
+                circle.setFill(Color.web("#00ff007c"));
+                break;
+            case 3:
+                circle.setFill(Color.web("#fffb007c"));
+                break;
+            case 4:
+                circle.setFill(Color.web("#0000ff7c"));
+                break;
+            case 5:
+                circle.setFill(Color.web("#ffa6007c"));
+                break;
+            default:
+                circle.setFill(Color.web("#00000000"));
+        }
         addRider(fromFloor,toFloor);
         }
 

@@ -138,30 +138,30 @@
       <Line endX="-1.5" endY="84.0" layoutX="547.0" layoutY="521.0" startX="-1.5" startY="-6.0" />
       <Line endX="-1.5" endY="84.0" layoutX="379.0" layoutY="521.0" startX="-1.5" startY="-6.0" />
       <Line endX="-1.5" endY="84.0" layoutX="323.0" layoutY="521.0" startX="-1.5" startY="-6.0" />
-      <Polyline fx:id="triangle1LU" fill="#f0ecc5" layoutX="360.0" layoutY="528.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle2LD" fill="#f0ecc5" layoutX="349.0" layoutY="396.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle2LU" fill="#f0ecc5" layoutX="368.0" layoutY="409.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle3LD" fill="#f0ecc5" layoutX="351.0" layoutY="274.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle3LU" fill="#f0ecc5" layoutX="370.0" layoutY="288.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle4LD" fill="#f0ecc5" layoutX="349.0" layoutY="153.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle4LU" fill="#f0ecc5" layoutX="368.0" layoutY="167.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle2MD" fill="#f0ecc5" layoutX="463.0" layoutY="396.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle2MU" fill="#f0ecc5" layoutX="483.0" layoutY="408.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle2RD" fill="#f0ecc5" layoutX="574.0" layoutY="393.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle2RU" fill="#f0ecc5" layoutX="593.0" layoutY="408.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle3RD" fill="#f0ecc5" layoutX="573.0" layoutY="274.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle3RU" fill="#f0ecc5" layoutX="592.0" layoutY="288.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle3MD" fill="#f0ecc5" layoutX="461.0" layoutY="274.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle3MU" fill="#f0ecc5" layoutX="480.0" layoutY="288.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle4RD" fill="#f0ecc5" layoutX="572.0" layoutY="153.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle4RU" fill="#f0ecc5" layoutX="591.0" layoutY="167.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle4MD" fill="#f0ecc5" layoutX="464.0" layoutY="153.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle4MU" fill="#f0ecc5" layoutX="483.0" layoutY="168.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle1MU" fill="#f0ecc5" layoutX="473.0" layoutY="528.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle1RU" fill="#f0ecc5" layoutX="585.0" layoutY="529.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle5LD" fill="#f0ecc5" layoutX="359.0" layoutY="33.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle5MD" fill="#f0ecc5" layoutX="471.0" layoutY="34.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polyline fx:id="triangle5RD" fill="#f0ecc5" layoutX="582.0" layoutY="34.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polyline fx:id="triangle1LU" fill="#ffffff52" layoutX="360.0" layoutY="528.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle2LD" fill="#ffffff52" layoutX="349.0" layoutY="396.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle2LU" fill="#ffffff52" layoutX="368.0" layoutY="409.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle3LD" fill="#ffffff52" layoutX="351.0" layoutY="274.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle3LU" fill="#ffffff52" layoutX="370.0" layoutY="288.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle4LD" fill="#ffffff52" layoutX="349.0" layoutY="153.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle4LU" fill="#ffffff52" layoutX="368.0" layoutY="167.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle2MD" fill="#ffffff52" layoutX="463.0" layoutY="396.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle2MU" fill="#ffffff52" layoutX="483.0" layoutY="408.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle2RD" fill="#ffffff52" layoutX="574.0" layoutY="393.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle2RU" fill="#ffffff52" layoutX="593.0" layoutY="408.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle3RD" fill="#ffffff52" layoutX="573.0" layoutY="274.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle3RU" fill="#ffffff52" layoutX="592.0" layoutY="288.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle3MD" fill="#ffffff52" layoutX="461.0" layoutY="274.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle3MU" fill="#ffffff52" layoutX="480.0" layoutY="288.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle4RD" fill="#ffffff52" layoutX="572.0" layoutY="153.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle4RU" fill="#ffffff52" layoutX="591.0" layoutY="167.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle4MD" fill="#ffffff52" layoutX="464.0" layoutY="153.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle4MU" fill="#ffffff52" layoutX="483.0" layoutY="168.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle1MU" fill="#ffffff52" layoutX="473.0" layoutY="528.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle1RU" fill="#ffffff52" layoutX="585.0" layoutY="529.0" points="-18.0, -16.5, -0.5, -16.5, -8.0, -32.5, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle5LD" fill="#ffffff52" layoutX="359.0" layoutY="33.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle5MD" fill="#ffffff52" layoutX="471.0" layoutY="34.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" />
+      <Polyline fx:id="triangle5RD" fill="#ffffff52" layoutX="582.0" layoutY="34.0" points="-18.0, -16.5, -0.5, -16.5, -8.5, -2.0, -18.0, -16.5" strokeType="INSIDE" />
       <Text layoutX="10.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
       <Text layoutX="10.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
       <Text layoutX="10.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
@@ -187,31 +187,31 @@
       <Text layoutX="10.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
       <Text layoutX="10.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
       <Text layoutX="10.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R" />
-      <Circle fx:id="f5b1" fill="#ffe99f47" layoutX="13.0" layoutY="14.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f4b1" fill="#ffe99f47" layoutX="13.0" layoutY="137.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f4b2" fill="#ffe99f47" layoutX="13.0" layoutY="161.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f4b3" fill="#ffe99f47" layoutX="13.0" layoutY="185.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f4b5" fill="#ffe99f47" layoutX="13.0" layoutY="209.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f4bR" fill="#ffe99f47" layoutX="13.0" layoutY="233.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f3b1" fill="#ffe99f47" layoutX="13.0" layoutY="257.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f3b2" fill="#ffe99f47" layoutX="13.0" layoutY="281.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f3b4" fill="#ffe99f47" layoutX="13.0" layoutY="305.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f3b5" fill="#ffe99f47" layoutX="13.0" layoutY="329.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f3bR" fill="#ffe99f47" layoutX="13.0" layoutY="353.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f2b1" fill="#ffe99f47" layoutX="13.0" layoutY="377.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f2b3" fill="#ffe99f47" layoutX="13.0" layoutY="401.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f2b4" fill="#ffe99f47" layoutX="13.0" layoutY="425.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f2b5" fill="#ffe99f47" layoutX="13.0" layoutY="449.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f2bR" fill="#ffe99f47" layoutX="13.0" layoutY="473.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f1b2" fill="#ffe99f47" layoutX="13.0" layoutY="497.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f1b3" fill="#ffe99f47" layoutX="13.0" layoutY="521.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f1b4" fill="#ffe99f47" layoutX="13.0" layoutY="545.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f1b5" fill="#ffe99f47" layoutX="13.0" layoutY="569.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f1bR" fill="#ffe99f47" layoutX="13.0" layoutY="592.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f5b2" fill="#ffe99f47" layoutX="13.0" layoutY="38.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f5b3" fill="#ffe99f47" layoutX="13.0" layoutY="62.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f5b4" fill="#ffe99f47" layoutX="12.0" layoutY="86.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="f5bR" fill="#ffe99f47" layoutX="12.0" layoutY="110.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f5b1" fill="#ffffff47" layoutX="13.0" layoutY="14.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f4b1" fill="#ffffff47" layoutX="13.0" layoutY="137.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f4b2" fill="#ffffff47" layoutX="13.0" layoutY="161.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f4b3" fill="#ffffff47" layoutX="13.0" layoutY="185.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f4b5" fill="#ffffff47" layoutX="13.0" layoutY="209.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f4bR" fill="#ffffff47" layoutX="13.0" layoutY="233.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f3b1" fill="#ffffff47" layoutX="13.0" layoutY="257.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f3b2" fill="#ffffff47" layoutX="13.0" layoutY="281.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f3b4" fill="#ffffff47" layoutX="13.0" layoutY="305.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f3b5" fill="#ffffff47" layoutX="13.0" layoutY="329.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f3bR" fill="#ffffff47" layoutX="13.0" layoutY="353.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f2b1" fill="#ffffff47" layoutX="13.0" layoutY="377.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f2b3" fill="#ffffff47" layoutX="13.0" layoutY="401.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f2b4" fill="#ffffff47" layoutX="13.0" layoutY="425.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f2b5" fill="#ffffff47" layoutX="13.0" layoutY="449.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f2bR" fill="#ffffff47" layoutX="13.0" layoutY="473.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f1b2" fill="#ffffff47" layoutX="13.0" layoutY="497.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f1b3" fill="#ffffff47" layoutX="13.0" layoutY="521.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f1b4" fill="#ffffff47" layoutX="13.0" layoutY="545.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f1b5" fill="#ffffff47" layoutX="13.0" layoutY="569.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f1bR" fill="#ffffff47" layoutX="13.0" layoutY="592.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f5b2" fill="#ffffff47" layoutX="13.0" layoutY="38.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f5b3" fill="#ffffff47" layoutX="13.0" layoutY="62.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f5b4" fill="#ffffff47" layoutX="12.0" layoutY="86.0" onMouseClicked="#onFloorButtonClick" onMouseEntered="#onHoverOn" onMouseExited="#onHoverOff" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="f5bR" fill="#ffffff47" layoutX="12.0" layoutY="110.0" onMouseClicked="#onFloorButtonClick" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
       <Text layoutX="734.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stats:">
          <font>
             <Font size="22.0" />
@@ -223,5 +223,30 @@
       <Text fx:id="ec3NextStops" layoutX="594.0" layoutY="503.0" strokeType="OUTSIDE" strokeWidth="0.0" text="El3" />
       <Text fx:id="needUP" layoutX="703.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="up requests:" />
       <Text fx:id="needDOWN" layoutX="703.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="down requests" />
+      <Text fill="#ffa60054" layoutX="625.0" layoutY="14.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5th Floor" wrappingWidth="36.755862921476364">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text fill="#1500ff5c" layoutX="625.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4th Floor" wrappingWidth="36.755862921476364">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text fill="#fffb00d1" layoutX="625.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3rd Floor" wrappingWidth="36.755862921476364">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text fill="#00ff1150" layoutX="625.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2nd Floor" wrappingWidth="36.755862921476364">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text fill="#ff00007d" layoutX="625.0" layoutY="496.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1st Floor" wrappingWidth="36.755862921476364">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </Text>
    </children>
 </Pane>
