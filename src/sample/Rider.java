@@ -37,8 +37,8 @@ public class Rider extends Pane
     TimerTask task;
     int elevatorX;
     Controller ctrlr = new Controller();
-
-
+    Boolean foundElevator = false;
+    ParallelTransition toQ;
     public Rider(Pane pane, final int riderWeight, final int fromFloor, final int toFloor, int waitingTime){
         //rider constructor
         weight = riderWeight;
@@ -150,27 +150,27 @@ public class Rider extends Pane
         final int beginningQueueSize = startFloorQueue.size();
         TranslateTransition tt = new TranslateTransition();
         tt.setNode(riderAni);
-        tt.setToX(250-floorOffset);
+        tt.setToX(230-floorOffset);
         tt.setDuration(Duration.seconds(4));
          TranslateTransition fl = new TranslateTransition();
          fl.setNode(floorLabel);
-         fl.setToX(245-floorOffset);
+         fl.setToX(225-floorOffset);
          fl.setDuration(Duration.seconds(4));
          TranslateTransition tl = new TranslateTransition();
          tl.setNode(timerLabel);
-         tl.setToX(245-floorOffset);
+         tl.setToX(225-floorOffset);
          tl.setDuration(Duration.seconds(4));
-         ParallelTransition pt = new ParallelTransition(tt,fl,tl);
-         pt.play();
+         toQ = new ParallelTransition(tt,fl,tl);
+         toQ.play();
          final int offset= floorOffset;
 
-         pt.onFinishedProperty().set(new EventHandler<ActionEvent>() {
+         toQ.onFinishedProperty().set(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 if (timer==null){
                     startTimer();
                 }
                 riderAni.setImage(image2);
-                Object dirBtn = Controller.floorsList.get(startFloor-1).upButtonActive;
+                //Object dirBtn = Controller.floorsList.get(startFloor-1).upButtonActive;
                 //fires once person stops walking
                 Boolean shouldCall = false;
 
@@ -182,11 +182,7 @@ public class Rider extends Pane
                 }
 
 
-
-                    if (beginningQueueSize==1 || offset==0) {
-                        ctrlr.getElevator(startFloor, direction);
-                    } else if (shouldCall){
-                        System.out.println("Opposite direction needed");
+                    if (shouldCall){
                         ctrlr.getElevator(startFloor, direction);
                     }
 
@@ -196,8 +192,10 @@ public class Rider extends Pane
     }
 
      void enterElevator(final ElevatorCar ec){
+         toQ.stop();
+         foundElevator = true;
          //Bounds boundsInScene = floorLabel.localToScene(floorLabel.getBoundsInLocal());
-        elevatorX=ec.xPos;
+         elevatorX=ec.xPos;
          Double speed= Math.random()*3+1.5;
          riderAni.setImage(image);
          TranslateTransition tt = new TranslateTransition();

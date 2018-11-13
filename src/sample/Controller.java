@@ -31,9 +31,14 @@ public class Controller {
     @FXML private ToggleButton startSim;
 //    @FXML private Polyline triangle1LU;
     @FXML  private Text ec1NextStops,ec2NextStops,ec3NextStops,needUP,needDOWN;
+    @FXML private Circle firstFlrBtn,secondFlrBtnUp,secondFlrBtnDown,thirdFlrBtnUp,
+            thirdFlrBtnDown,fourthFlrBtnUp,fourthFlrBtnDown,fifthFlrBtn;
+
     private ArrayList<Rectangle> shaft1 = new ArrayList<Rectangle>();//holds all elevator doors of a shaft
     private ArrayList<Rectangle> shaft2 = new ArrayList<Rectangle>();//holds all elevator doors of a shaft
     private ArrayList<Rectangle> shaft3 = new ArrayList<Rectangle>();//holds all elevator doors of a shaft
+    static ArrayList<Circle> requestButtons = new ArrayList<Circle>();//holds all elevator doors of a shaft
+
     static ArrayList<Text> queueCountsCurrent=new ArrayList<Text>(5);
     static ArrayList<Text> travellersCount=new ArrayList<Text>(9);
     static Text awl;
@@ -94,14 +99,21 @@ public class Controller {
         floorStopLabels.add(ec3NextStops);
         floorStopLabels.add(needUP);
         floorStopLabels.add(needDOWN);
+        requestButtons.add(firstFlrBtn);
+        requestButtons.add(secondFlrBtnDown);
+        requestButtons.add(secondFlrBtnUp);
+        requestButtons.add(thirdFlrBtnDown);
+        requestButtons.add(thirdFlrBtnUp);
+        requestButtons.add(fourthFlrBtnDown);
+        requestButtons.add(fourthFlrBtnUp);
+        requestButtons.add(fifthFlrBtn);
+
     }
 
     @FXML protected void simTimer(MouseEvent actionEvent) {
         int fromFloor= (int)(Math.random()*5+1);
         addRider(fromFloor,27);
     }
-
-
 
     @FXML
     void onHoverOff(MouseEvent actionEvent) {
@@ -206,6 +218,15 @@ public class Controller {
     }
 
      void getElevator(int startFloor,String riderDir){
+        //has already checked to see if button needs to be pressed
+         if (riderDir.equals("UP") && !upRequests.contains(startFloor)){
+             floorsList.get(startFloor-1).upButtonActive = true;
+             Floor.setLights(startFloor,riderDir , 1);
+         } else if (riderDir.equals("DOWN") && !downRequests.contains(startFloor)){
+             floorsList.get(startFloor-1).downButtonActive = true;
+             Floor.setLights(startFloor,riderDir , 1);
+         }
+
         //find current closest elevator
         ElevatorCar closestCar = null;
         ElevatorCar nextClosestCar = null;
@@ -235,83 +256,72 @@ public class Controller {
         closestCar=list.get(2).getKey();
 
 
-        System.out.println(riderDir + " REQUESTED!!!");
-        if(closestCar.status==Status.WAITING){
-            closestCar.currentDirection=riderDir;
-            if (riderDir.equals("UP") && !upRequests.contains(startFloor)){
-                upRequests.add(startFloor);
-//                for (int i = closestCar.currentFloor+1;i<=startFloor;i++){
-//                    if (upRequests.contains(i))
-//                            closestCar.callElevator(i);
-//                }
-            } else if (riderDir.equals("DOWN") && !downRequests.contains(startFloor)){
-                downRequests.add(startFloor);
-            }
-            closestCar.callElevator(startFloor);//if ec waiting, immediately go to floor
+        //System.out.println(riderDir + " REQUESTED!!!");
+        //an elevator is already prepared to stop at startfloor
 
-            closestCar.updateLabels();
-
-        }
-//        else if(closestCar.currentDirection==riderDir && !closestCar.getDropOffFloor().contains(startFloor)
-//                &&closestCar.status!=Status.WAITING && isHeadedThatWay(closestCar.currentDirection, startFloor,
-//                closestCar.currentFloor)&&closestCar.getCarWeight()<500){
+         if(closestCar.status==Status.WAITING){
+             closestCar.currentDirection=riderDir;//set direction equal to first rider it's picking up
+             closestCar.callElevator(startFloor);//if ec waiting, immediately go to floor
+         } //either check if it will stop at your floor anyway, or make it stop there
+         else
+         if(nextClosestCar.status==Status.WAITING){
+             nextClosestCar.currentDirection=riderDir;
+             nextClosestCar.callElevator(startFloor);//if ec waiting, immediately go to floor
+         }
+         else
+         if(furthestCar.status==Status.WAITING){
+             furthestCar.currentDirection=riderDir;
+             furthestCar.callElevator(startFloor);//if ec waiting, immediately go to floor
+         }
+//         else if (closestCar.currentDirection == riderDir && (closestCar.getDropOffFloor().contains(startFloor) ||
+//                closestCar.currentFloor == startFloor) && closestCar.getCarWeight()<500){
+//             System.out.println(closestCar.debugName + " already an elevator headed for floor " + startFloor);
 //
-//            closestCar.addDropOffFloor(startFloor);//if ec waiting, immediately go to floor
+//         }
+//         else if (nextClosestCar.currentDirection == riderDir && (nextClosestCar.getDropOffFloor().contains(startFloor) ||
+//                nextClosestCar.currentFloor == startFloor) && nextClosestCar.getCarWeight()<500){
+//             System.out.println(nextClosestCar.debugName + " already an elevator headed for floor " + startFloor);
+//         }
+//         else if (furthestCar.currentDirection == riderDir && (furthestCar.getDropOffFloor().contains(startFloor) ||
+//                furthestCar.currentFloor == startFloor) && furthestCar.getCarWeight()<500){
+//             System.out.println(furthestCar.debugName + " already an elevator headed for floor " + startFloor);
+//         }
+//
+//         //an elevator is headed in passengers direction and hasn't passed yet
+//        else if (closestCar.currentDirection == riderDir && closestCar.getCarWeight()<500
+//                && closestCar.currentDirection.equals("UP") && closestCar.currentFloor < startFloor){
+//             closestCar.addDropOffFloor(startFloor);
+//         }
+//        else if (closestCar.currentDirection == riderDir && closestCar.getCarWeight()<500
+//                && closestCar.currentDirection.equals("DOWN") && closestCar.currentFloor < startFloor){
+//            closestCar.addDropOffFloor(startFloor);
 //        }
-        else
-            if(nextClosestCar.status==Status.WAITING){
-            nextClosestCar.currentDirection=riderDir;
-            if (riderDir.equals("UP") && !upRequests.contains(startFloor)){
-                upRequests.add(startFloor);
-            } else if (riderDir.equals("DOWN") && !downRequests.contains(startFloor)){
-                downRequests.add(startFloor);
-            }
-            nextClosestCar.callElevator(startFloor);//if ec waiting, immediately go to floor
-
-            nextClosestCar.updateLabels();
-        }
-
-
-//        else if(nextClosestCar.currentDirection==riderDir&& !nextClosestCar.getDropOffFloor().contains(startFloor)
-//                &&nextClosestCar.status!=Status.WAITING && isHeadedThatWay(nextClosestCar.currentDirection, startFloor,
-//                nextClosestCar.currentFloor)&&nextClosestCar.getCarWeight()<500){
-//            nextClosestCar.addDropOffFloor(startFloor);//if ec waiting, immediately go to floor
+//        else if (nextClosestCar.currentDirection == riderDir && nextClosestCar.getCarWeight()<500
+//                && nextClosestCar.currentDirection.equals("UP") && nextClosestCar.currentFloor < startFloor){
+//            nextClosestCar.addDropOffFloor(startFloor);
 //        }
-        else
-
-            if(furthestCar.status==Status.WAITING){
-            furthestCar.currentDirection=riderDir;
-            if (riderDir.equals("UP") && !upRequests.contains(startFloor)){
-                floorsList.get(startFloor-1).upButtonActive = true;
-                upRequests.add(startFloor);
-            } else if (riderDir.equals("DOWN") && !downRequests.contains(startFloor)){
-                floorsList.get(startFloor-1).downButtonActive = true;
-                downRequests.add(startFloor);
-            }
-             if (riderDir.equals("UP") && upRequests.contains(startFloor)){
-                floorsList.get(startFloor-1).upButtonActive = true;
-            } else if (riderDir.equals("DOWN") && downRequests.contains(startFloor)){
-                floorsList.get(startFloor-1).downButtonActive = true;
-            }
-            furthestCar.callElevator(startFloor);//if ec waiting, immediately go to floor
-
-
-        furthestCar.updateLabels();
-        }
-//        else if(furthestCar.currentDirection==riderDir && !furthestCar.getDropOffFloor().contains(startFloor)
-//                && furthestCar.status!=Status.WAITING && isHeadedThatWay(furthestCar.currentDirection, startFloor, furthestCar.currentFloor)&&furthestCar.getCarWeight()<500){
-//            furthestCar.addDropOffFloor(startFloor);//if ec waiting, immediately go to floor
+//        else if (nextClosestCar.currentDirection == riderDir && nextClosestCar.getCarWeight()<500
+//                && nextClosestCar.currentDirection.equals("DOWN") && nextClosestCar.currentFloor < startFloor){
+//            nextClosestCar.addDropOffFloor(startFloor);
+//        }        else if (furthestCar.currentDirection == riderDir && furthestCar.getCarWeight()<500
+//                && furthestCar.currentDirection.equals("UP") && furthestCar.currentFloor < startFloor){
+//            furthestCar.addDropOffFloor(startFloor);
 //        }
-        else {
-            //System.out.println(startFloor+ " STILL NEEDS SERVICING");
-            if (riderDir.equals("UP") && !upRequests.contains(startFloor)){
-                floorsList.get(startFloor-1).upButtonActive = true;
-                upRequests.add(startFloor);
-            } else if (riderDir.equals("DOWN") && !downRequests.contains(startFloor)){
-                floorsList.get(startFloor-1).downButtonActive = true;
-                downRequests.add(startFloor);
+//        else if (furthestCar.currentDirection == riderDir && furthestCar.getCarWeight()<500
+//                && furthestCar.currentDirection.equals("DOWN") && furthestCar.currentFloor < startFloor){
+//            furthestCar.addDropOffFloor(startFloor);
+//        }
+
+ else {
+                if (riderDir.equals("UP") && !upRequests.contains(startFloor)){
+                    upRequests.add(startFloor);
+                } else if (riderDir.equals("DOWN") && !downRequests.contains(startFloor)){
+                    downRequests.add(startFloor);
+                }
+             floorStopLabels.get(3).setText("up requests: "+ Controller.upRequests.toString());
+             floorStopLabels.get(4).setText("down requests: "+ Controller.downRequests.toString());
             }
-        }
+
 
          //check if it's waiting
 
@@ -338,15 +348,20 @@ public class Controller {
                     if(!ec.getDropOffFloor().contains(passenger.endFloor)){
                         ec.addDropOffFloor(passenger.endFloor);
                     }
+                    floorStopLabels.get(0).setText(ec1.getDropOffFloor().toString());
+                    floorStopLabels.get(2).setText(ec2.getDropOffFloor().toString());
+                    floorStopLabels.get(3).setText(ec3.getDropOffFloor().toString());
+
                 } else {//going in el. direction but already full
-                    if(ec.travelingRiders.size()>0){
-                        passenger.walkToQueue(thisQueue);
+                    if(ec.travelingRiders.size()>0 && !passenger.foundElevator){
+                        passenger.walkToQueue(floorsList.get(passenger.startFloor-1).ridersInQueue);
                     }
-                    thisOffset+=10;
+                    floorsList.get(currentFloor-1).queueOffset += 10;
                 }
 
-            } else {//not going in elevator direction
-                    if(ec.travelingRiders.size()>0){
+            }
+            else {//not going in elevator direction
+                    if(ec.travelingRiders.size()>0 && !passenger.foundElevator){
                         passenger.walkToQueue(floorsList.get(passenger.startFloor-1).ridersInQueue);
                     }
                     floorsList.get(currentFloor-1).queueOffset += 10;
@@ -380,7 +395,6 @@ public class Controller {
         travellers.get(7).setText("Current Floor: "+((Integer)(ec3.currentFloor)).toString());
         travellers.get(8).setText("Current Weight: "+((Integer)(ec3.getCarWeight())).toString()+" lbs");
     }
-
 
       LinkedList<Rider> getWaitingRiders(int startingFloor){
         return floorsList.get(startingFloor-1).ridersInQueue;

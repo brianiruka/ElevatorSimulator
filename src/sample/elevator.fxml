@@ -248,5 +248,13 @@
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </Text>
+      <Circle fx:id="firstFlrBtn" fill="WHITE" layoutX="308.0" layoutY="552.0" radius="4.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="secondFlrBtnUp" fill="WHITE" layoutX="308.0" layoutY="433.0" radius="4.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="secondFlrBtnDown" fill="WHITE" layoutX="308.0" layoutY="449.0" radius="4.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="thirdFlrBtnUp" fill="WHITE" layoutX="308.0" layoutY="312.0" radius="4.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="thirdFlrBtnDown" fill="WHITE" layoutX="308.0" layoutY="328.0" radius="4.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="fourthFlrBtnUp" fill="WHITE" layoutX="308.0" layoutY="193.0" radius="4.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="fourthFlrBtnDown" fill="WHITE" layoutX="308.0" layoutY="209.0" radius="4.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="fifthFlrBtn" fill="WHITE" layoutX="308.0" layoutY="93.0" radius="4.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </Pane>

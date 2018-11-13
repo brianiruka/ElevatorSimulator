@@ -6,10 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
+
+import java.util.*;
+
+import static sample.Controller.downRequests;
 import static sample.Controller.floorsList;
+import static sample.Controller.upRequests;
 
 enum Status {
     OPENING,OPEN,CLOSING,GOING_UP,GOING_DOWN,WAITING;
@@ -40,7 +42,8 @@ class ElevatorCar
      String currentDirection;
      String debugName;
      Controller ctrlr = new Controller();
-
+     Timer timer;
+     TimerTask task;
     //private ParallelTransition doorClose = new ParallelTransition(leftDoorClose,rightDoorClose);
      ElevatorCar thisInstance = this;
      ElevatorCar(Rectangle car, ArrayList<Rectangle> doorSet, int xVal,String name,int startFloor,int doorsetIndex){
@@ -85,11 +88,19 @@ class ElevatorCar
 
              doorOpen.play();
              final LinkedList<Rider> leavingRiders = new LinkedList<Rider>();
-       updateLabels();
+       //updateLabels();
 
        doorOpen.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 
                  public void handle(ActionEvent event) {
+                     if (currentDirection.equals("UP")){
+                         floorsList.get(currentFloor-1).upButtonActive = false;
+                         Floor.setLights(currentFloor,"UP" ,0 );
+                     } else if (currentDirection.equals("DOWN")){
+                         floorsList.get(currentFloor-1).downButtonActive = false;
+                         Floor.setLights(currentFloor,"DOWN" ,0 );
+
+                     }
                      status = Status.OPEN;
                      //left people off first
                      //check weight capacity, if room, let the next person waiting on
@@ -129,7 +140,7 @@ class ElevatorCar
                                  3000
                          );
                      }
-                     updateLabels();
+                     //updateLabels();
 
                  }
 
@@ -141,11 +152,7 @@ class ElevatorCar
 
     void closeDoors() {
 
-         if (currentDirection.equals("UP")){
-             floorsList.get(currentFloor-1).upButtonActive = false;
-         } else if (currentDirection.equals("DOWN")){
-             floorsList.get(currentFloor-1).downButtonActive = false;
-         }
+
 
         status=Status.CLOSING;
         //if no one currently walking to elevator, close and move
@@ -181,30 +188,36 @@ class ElevatorCar
 
             public void handle(ActionEvent event) {
                 if (travelingRiders.isEmpty()){
-//                    if no more passengers, move to a floor that needs servicing
-                        if (Controller.upRequests.size()>0 && Controller.upRequests.size()>=Controller.downRequests.size()){
-                            //see if there's more passengers needing to go up or down
-                            Collections.sort(Controller.upRequests);
-                            moveElevator(Controller.upRequests.get(0));
-                           // Controller.upRequests.remove(0);
-
-                        } else if (Controller.downRequests.size()>0 && Controller.upRequests.size()<Controller.downRequests.size()){
-                            Collections.sort(Controller.downRequests);
-                            Collections.reverse(Controller.downRequests);
-                            moveElevator(Controller.downRequests.get(0));
-                           // Controller.downRequests.remove(0);
-
-                            } else {
-                            status= Status.WAITING;
+                    if (!upRequests.isEmpty() && !downRequests.isEmpty()){
+                        for (int u: Controller.upRequests){
+                            if (u > currentFloor){
+                                floorStops.add(u);
+                            }
                         }
+                        sortDropOffFloor();
+                        moveElevator(floorStops.get(0));
+                        upRequests.removeAll(floorStops);
 
+                        if (floorStops.isEmpty()){//if no suitable uprequests added
+                            for (int d: Controller.downRequests){
+                                if (d < currentFloor){
+                                    floorStops.add(d);
+                                }
+                            }
+                            sortDropOffFloor();
+                            moveElevator(floorStops.get(0));
+                            downRequests.removeAll(floorStops);
+                        }
+                    } else {
+                        status= Status.WAITING;
+                        }
                 } else {
                     //move to next floor destination
                     sortDropOffFloor();
                     moveElevator(floorStops.get(0));
 
                 }
-                updateLabels();
+                //updateLabels();
 
             }
         });
@@ -280,7 +293,7 @@ class ElevatorCar
                 Controller.upRequests.remove((Integer)(removeFloor));
                 //System.out.println("removed floor "+removeFloor+" before elevator moved");
                 sortDropOffFloor();
-                updateLabels();
+                //updateLabels();
             }
             if (floorStops!=null){//if any floors not in direction, remove
                 ArrayList<Integer> removeFloors = new ArrayList<Integer>();
@@ -376,9 +389,11 @@ class ElevatorCar
             travellerCount++;
         }
         ridersMove.getChildren().add(elevatorMove);
-        System.out.println("elevator direction: " + currentDirection);
+        //System.out.println("elevator direction: " + currentDirection);
         ridersMove.onFinishedProperty().set(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+                timer.cancel();
+                task.cancel();
                 setCurrentFloor(fpFloor);
 
                 ctrlr.updateTravellers(Controller.travellersCount);
@@ -392,14 +407,73 @@ class ElevatorCar
     }
 
  void updateLabels(){
-     if (debugName.equals("car1")){
-         Controller.floorStopLabels.get(0).setText(floorStops.toString());
-     } else if (debugName.equals("car2")){
-         Controller.floorStopLabels.get(1).setText(floorStops.toString());
-     } else if (debugName.equals("car3")){
-         Controller.floorStopLabels.get(2).setText(floorStops.toString());
-     }
+
+     timer= new Timer();
+     task = new TimerTask() {
+         @Override
+         public void run() {
+             Double currentY = 480+34-car1.getLayoutY()-car1.getTranslateY();
+             //System.out.println(currentY);
+             if (currentY == 0 && currentDirection.equals("DOWN")){
+                 setCurrentFloor(1);
+             }
+             if (currentY < 119){
+                 if (currentDirection.equals("DOWN")){
+                     setCurrentFloor(2);
+
+                 } else if (currentDirection.equals("UP")){
+                     setCurrentFloor(1);
+                 }
+             } else if (currentY < 239){
+                 if (currentDirection.equals("DOWN")){
+                     setCurrentFloor(3);
+
+                 } else if (currentDirection.equals("UP")){
+                     setCurrentFloor(2);
+                 }
+             } else if (currentY < 360){
+                 if (currentDirection.equals("DOWN")){
+                     setCurrentFloor(4);
+
+                 } else if (currentDirection.equals("UP")){
+                     setCurrentFloor(3);
+                 }
+             } else if (currentY < 480){
+                 if (currentDirection.equals("DOWN")){
+                     setCurrentFloor(5);
+
+                 } else if (currentDirection.equals("UP")){
+                     setCurrentFloor(4);
+                 }
+             } else {
+                 setCurrentFloor(5);
+             }
+
+             if (debugName.equals("car1")){
+                 Controller.travellersCount.get(1).setText("Current Floor: "+currentFloor );
+                 Controller.floorStopLabels.get(0).setText(floorStops.toString());
+
+             } else if (debugName.equals("car2")){
+                 Controller.travellersCount.get(4).setText("Current Floor: "+currentFloor );
+                 Controller.floorStopLabels.get(1).setText(floorStops.toString());
+             } else if (debugName.equals("car3")){
+                 Controller.travellersCount.get(7).setText("Current Floor: "+currentFloor );
+                 Controller.floorStopLabels.get(2).setText(floorStops.toString());
+
+             }
+         }
+
+     };
+     timer.scheduleAtFixedRate(task,100,100);
+
+
+
+
+
      Controller.floorStopLabels.get(3).setText("up requests: "+ Controller.upRequests.toString());
      Controller.floorStopLabels.get(4).setText("down requests: "+ Controller.downRequests.toString());
  }
+
+
+
 }

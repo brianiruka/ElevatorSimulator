@@ -290,6 +290,9 @@ class ElevatorCar
         }
         ridersMove.getChildren().add(elevatorMove);
 
+
+
+
         ridersMove.onFinishedProperty().set(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 setCurrentFloor(passengerFloor);
@@ -300,6 +303,7 @@ class ElevatorCar
         });
 
         ridersMove.play();
+
 
     }
 
