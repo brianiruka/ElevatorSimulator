@@ -22,7 +22,7 @@ public class Rider extends Pane
      int weight;
      int startFloor;
      int endFloor;
-     private int waitDuration;
+     int waitDuration;
      ImageView riderAni;
      File file1;
      File file2;
@@ -192,6 +192,9 @@ public class Rider extends Pane
     }
 
      void enterElevator(final ElevatorCar ec){
+         if (timer==null){
+             startTimer();
+         }
          toQ.stop();
          foundElevator = true;
          //Bounds boundsInScene = floorLabel.localToScene(floorLabel.getBoundsInLocal());

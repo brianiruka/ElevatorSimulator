@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import java.text.DecimalFormat;
 import java.util.*;
 import javafx.scene.control.ToggleButton;
+
 import static java.util.Arrays.asList;
 
 public class Controller {
@@ -33,11 +34,20 @@ public class Controller {
     @FXML  private Text ec1NextStops,ec2NextStops,ec3NextStops,needUP,needDOWN;
     @FXML private Circle firstFlrBtn,secondFlrBtnUp,secondFlrBtnDown,thirdFlrBtnUp,
             thirdFlrBtnDown,fourthFlrBtnUp,fourthFlrBtnDown,fifthFlrBtn;
-
+    @FXML
+    private Polyline triangle1LU,triangle1MU,triangle1RU,
+    triangle2LD,triangle2LU,triangle2MD,triangle2MU,triangle2RD,triangle2RU,
+    triangle3LD,triangle3LU,triangle3MD,triangle3MU,triangle3RD,triangle3RU,
+    triangle4LD,triangle4LU,triangle4MD,triangle4MU,triangle4RD,triangle4RU, triangle5LD,triangle5MD,triangle5RD;
     private ArrayList<Rectangle> shaft1 = new ArrayList<Rectangle>();//holds all elevator doors of a shaft
     private ArrayList<Rectangle> shaft2 = new ArrayList<Rectangle>();//holds all elevator doors of a shaft
     private ArrayList<Rectangle> shaft3 = new ArrayList<Rectangle>();//holds all elevator doors of a shaft
     static ArrayList<Circle> requestButtons = new ArrayList<Circle>();//holds all elevator doors of a shaft
+    static ArrayList<Polyline> floor1Triangles = new ArrayList<Polyline>();
+    static ArrayList<Polyline> floor2Triangles = new ArrayList<Polyline>();
+    static ArrayList<Polyline> floor3Triangles = new ArrayList<Polyline>();
+    static ArrayList<Polyline> floor4Triangles = new ArrayList<Polyline>();
+    static ArrayList<Polyline> floor5Triangles = new ArrayList<Polyline>();
 
     static ArrayList<Text> queueCountsCurrent=new ArrayList<Text>(5);
     static ArrayList<Text> travellersCount=new ArrayList<Text>(9);
@@ -47,8 +57,9 @@ public class Controller {
     static ArrayList<Integer> downRequests=new ArrayList<Integer>(5);
     static ArrayList<Text> floorStopLabels = new ArrayList<Text>();
     static Double allFloorJobsTotal = 0.0;
-
     static ElevatorCar ec1,ec2,ec3;
+    static ArrayList<ElevatorCar> carArray = new ArrayList<ElevatorCar>();
+
     static int averageWait=0;
     static int completeTrips=0;
     static int totalWait=0;
@@ -65,7 +76,6 @@ public class Controller {
     @FXML
     public void initialize(){
         //method runs after javafx scene is initialized
-
         shaft1.addAll(Arrays.asList(floor1_doorLeft1,floor1_doorRight1,floor2_doorLeft1,floor2_doorRight1,
                 floor3_doorLeft1,floor3_doorRight1,floor4_doorLeft1,floor4_doorRight1,floor5_doorLeft1,floor5_doorRight1));
         shaft2.addAll(Arrays.asList(floor1_doorLeft2,floor1_doorRight2,floor2_doorLeft2,floor2_doorRight2,
@@ -90,12 +100,12 @@ public class Controller {
         ec1= new ElevatorCar(car1 , shaft1,315,"car1",1,0);
         ec2= new ElevatorCar(car2 , shaft2,425,"car2",3,4);
         ec3= new ElevatorCar(car3 , shaft3,540,"car3",5,8);
-        //ec3=ec2=ec1;
+        carArray.addAll(Arrays.asList(ec1,ec2,ec3));
+
         updateQueues(queueCountsCurrent);
         awl = averageWaitLabel;
         lw=longestWaitLabel;
-        floorStopLabels.add(ec1NextStops);
-        floorStopLabels.add(ec2NextStops);
+        floorStopLabels.add(ec1NextStops); floorStopLabels.add(ec2NextStops);
         floorStopLabels.add(ec3NextStops);
         floorStopLabels.add(needUP);
         floorStopLabels.add(needDOWN);
@@ -107,7 +117,11 @@ public class Controller {
         requestButtons.add(fourthFlrBtnDown);
         requestButtons.add(fourthFlrBtnUp);
         requestButtons.add(fifthFlrBtn);
-
+        floor1Triangles.addAll(Arrays.asList(triangle1LU,triangle1MU,triangle1RU));
+        floor2Triangles.addAll(Arrays.asList(triangle2LU,triangle2LD,triangle2MU,triangle2MD,triangle2RU,triangle2RD));
+        floor3Triangles.addAll(Arrays.asList(triangle3LU,triangle3LD,triangle3MU,triangle3MD,triangle3RU,triangle3RD));
+        floor4Triangles.addAll(Arrays.asList(triangle4LU,triangle4LD,triangle4MU,triangle4MD,triangle4RU,triangle4RD));
+        floor5Triangles.addAll(Arrays.asList(triangle5LD,triangle5MD,triangle5RD));
     }
 
     @FXML protected void simTimer(MouseEvent actionEvent) {
@@ -221,10 +235,10 @@ public class Controller {
         //has already checked to see if button needs to be pressed
          if (riderDir.equals("UP") && !upRequests.contains(startFloor)){
              floorsList.get(startFloor-1).upButtonActive = true;
-             Floor.setLights(startFloor,riderDir , 1);
+             Floor.adjustButtonLights(startFloor,riderDir , 1);
          } else if (riderDir.equals("DOWN") && !downRequests.contains(startFloor)){
              floorsList.get(startFloor-1).downButtonActive = true;
-             Floor.setLights(startFloor,riderDir , 1);
+             Floor.adjustButtonLights(startFloor,riderDir , 1);
          }
 
         //find current closest elevator
@@ -261,58 +275,23 @@ public class Controller {
 
          if(closestCar.status==Status.WAITING){
              closestCar.currentDirection=riderDir;//set direction equal to first rider it's picking up
+             closestCar.destinationDirection = riderDir;
              closestCar.callElevator(startFloor);//if ec waiting, immediately go to floor
          } //either check if it will stop at your floor anyway, or make it stop there
          else
          if(nextClosestCar.status==Status.WAITING){
              nextClosestCar.currentDirection=riderDir;
+             nextClosestCar.destinationDirection = riderDir;
              nextClosestCar.callElevator(startFloor);//if ec waiting, immediately go to floor
          }
          else
          if(furthestCar.status==Status.WAITING){
              furthestCar.currentDirection=riderDir;
+             furthestCar.destinationDirection = riderDir;
              furthestCar.callElevator(startFloor);//if ec waiting, immediately go to floor
          }
-//         else if (closestCar.currentDirection == riderDir && (closestCar.getDropOffFloor().contains(startFloor) ||
-//                closestCar.currentFloor == startFloor) && closestCar.getCarWeight()<500){
-//             System.out.println(closestCar.debugName + " already an elevator headed for floor " + startFloor);
-//
-//         }
-//         else if (nextClosestCar.currentDirection == riderDir && (nextClosestCar.getDropOffFloor().contains(startFloor) ||
-//                nextClosestCar.currentFloor == startFloor) && nextClosestCar.getCarWeight()<500){
-//             System.out.println(nextClosestCar.debugName + " already an elevator headed for floor " + startFloor);
-//         }
-//         else if (furthestCar.currentDirection == riderDir && (furthestCar.getDropOffFloor().contains(startFloor) ||
-//                furthestCar.currentFloor == startFloor) && furthestCar.getCarWeight()<500){
-//             System.out.println(furthestCar.debugName + " already an elevator headed for floor " + startFloor);
-//         }
-//
-//         //an elevator is headed in passengers direction and hasn't passed yet
-//        else if (closestCar.currentDirection == riderDir && closestCar.getCarWeight()<500
-//                && closestCar.currentDirection.equals("UP") && closestCar.currentFloor < startFloor){
-//             closestCar.addDropOffFloor(startFloor);
-//         }
-//        else if (closestCar.currentDirection == riderDir && closestCar.getCarWeight()<500
-//                && closestCar.currentDirection.equals("DOWN") && closestCar.currentFloor < startFloor){
-//            closestCar.addDropOffFloor(startFloor);
-//        }
-//        else if (nextClosestCar.currentDirection == riderDir && nextClosestCar.getCarWeight()<500
-//                && nextClosestCar.currentDirection.equals("UP") && nextClosestCar.currentFloor < startFloor){
-//            nextClosestCar.addDropOffFloor(startFloor);
-//        }
-//        else if (nextClosestCar.currentDirection == riderDir && nextClosestCar.getCarWeight()<500
-//                && nextClosestCar.currentDirection.equals("DOWN") && nextClosestCar.currentFloor < startFloor){
-//            nextClosestCar.addDropOffFloor(startFloor);
-//        }        else if (furthestCar.currentDirection == riderDir && furthestCar.getCarWeight()<500
-//                && furthestCar.currentDirection.equals("UP") && furthestCar.currentFloor < startFloor){
-//            furthestCar.addDropOffFloor(startFloor);
-//        }
-//        else if (furthestCar.currentDirection == riderDir && furthestCar.getCarWeight()<500
-//                && furthestCar.currentDirection.equals("DOWN") && furthestCar.currentFloor < startFloor){
-//            furthestCar.addDropOffFloor(startFloor);
-//        }
 
- else {
+         else {
                 if (riderDir.equals("UP") && !upRequests.contains(startFloor)){
                     upRequests.add(startFloor);
                 } else if (riderDir.equals("DOWN") && !downRequests.contains(startFloor)){
@@ -349,8 +328,8 @@ public class Controller {
                         ec.addDropOffFloor(passenger.endFloor);
                     }
                     floorStopLabels.get(0).setText(ec1.getDropOffFloor().toString());
-                    floorStopLabels.get(2).setText(ec2.getDropOffFloor().toString());
-                    floorStopLabels.get(3).setText(ec3.getDropOffFloor().toString());
+                    floorStopLabels.get(1).setText(ec2.getDropOffFloor().toString());
+                    floorStopLabels.get(2).setText(ec3.getDropOffFloor().toString());
 
                 } else {//going in el. direction but already full
                     if(ec.travelingRiders.size()>0 && !passenger.foundElevator){
@@ -368,8 +347,6 @@ public class Controller {
                 }
             }
             floorsList.get(currentFloor-1).ridersInQueue.removeAll(ec.travelingRiders);//can't remove boarded passengers from queue during for each loop, so after concludes remove traveling passengers
-         if (floorsList.get(currentFloor-1).ridersInQueue.isEmpty()){//if no one in queue, remove from floors to pick up from
-         }
          updateQueues(queuesCurr);
          updateTravellers(travellersCount);
           if (floorsList.get(currentFloor-1).ridersInQueue.isEmpty()){
@@ -405,6 +382,52 @@ public class Controller {
         if (indWait>longestWait){
             longestWait=indWait;
             lw.setText("Longest Wait: "+longestWait+" seconds");
+        }
+    }
+
+    static int setWaitingCar(){//determines, based on traffic, where a car that has entered wait state should go
+        int busiestFloorReq = 0; //how many cars the busiest floor should have
+        int nextBusiestFloorReq = 0; //how many cars the busiest floor should have
+
+        int floor1 =  floorsList.get(0).floorJobsTotal;
+        int floor2 =  floorsList.get(1).floorJobsTotal;
+        int floor3 =  floorsList.get(2).floorJobsTotal;
+        int floor4 =  floorsList.get(3).floorJobsTotal;
+        int floor5 =  floorsList.get(4).floorJobsTotal;
+        List<Integer> floorTraffic = new ArrayList<Integer>();
+        floorTraffic.addAll(Arrays.asList(floor1,floor2,floor3,floor4,floor5));
+        List<Integer> floorTrafficSorted = floorTraffic;
+        Collections.sort(floorTrafficSorted);
+        int largestInt = floorTrafficSorted.get(0);
+        int nextLargestInt = floorTrafficSorted.get(1);
+
+        if (largestInt >= nextLargestInt * 3){
+            busiestFloorReq = 3;
+        } else if (largestInt >= nextLargestInt * 2){
+            busiestFloorReq = 2;
+            nextBusiestFloorReq = 1;
+
+        } else {
+            busiestFloorReq = 1;
+            nextBusiestFloorReq = 1;
+        }
+        int carsAtBusiestFloor = 0;
+        int carsAtNextBusiestFloor = 0;
+
+        for (ElevatorCar ec: carArray) {
+            if (ec.status == Status.WAITING && ec.currentFloor == busiestFloorReq){
+                carsAtBusiestFloor++;
+            } else if (ec.status == Status.WAITING && ec.currentFloor == nextBusiestFloorReq){
+                carsAtNextBusiestFloor++;
+            }
+        }
+
+        if (busiestFloorReq - carsAtBusiestFloor > 0 && nextLargestInt > 0){//rest car at busiest floor
+            return floorTraffic.indexOf(largestInt)+1;
+        } else if (nextBusiestFloorReq - carsAtNextBusiestFloor > 0  && nextLargestInt > 0){//rest car at next busiest floor
+            return floorTraffic.indexOf(nextLargestInt)+1;
+        } else {//take no action
+            return 0;
         }
 
     }

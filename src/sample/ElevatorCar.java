@@ -40,6 +40,7 @@ class ElevatorCar
      private ParallelTransition doorOpen;
      Status status=Status.WAITING;
      String currentDirection;
+     String destinationDirection;
      String debugName;
      Controller ctrlr = new Controller();
      Timer timer;
@@ -93,14 +94,7 @@ class ElevatorCar
        doorOpen.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 
                  public void handle(ActionEvent event) {
-                     if (currentDirection.equals("UP")){
-                         floorsList.get(currentFloor-1).upButtonActive = false;
-                         Floor.setLights(currentFloor,"UP" ,0 );
-                     } else if (currentDirection.equals("DOWN")){
-                         floorsList.get(currentFloor-1).downButtonActive = false;
-                         Floor.setLights(currentFloor,"DOWN" ,0 );
 
-                     }
                      status = Status.OPEN;
                      //left people off first
                      //check weight capacity, if room, let the next person waiting on
@@ -129,6 +123,13 @@ class ElevatorCar
                          closeDoors();
                          currentDirection="NONE";
                      } else {
+                         if (currentDirection.equals("UP")){
+                             floorsList.get(currentFloor-1).upButtonActive = false;
+                             Floor.adjustButtonLights(currentFloor,"UP" ,0 );
+                         } else if (currentDirection.equals("DOWN")){
+                             floorsList.get(currentFloor-1).downButtonActive = false;
+                             Floor.adjustButtonLights( currentFloor,"DOWN" ,0 );
+                         }
                          ctrlr.boarding(thisInstance,currentFloor,Controller.queueCountsCurrent,Controller.travellersCount);
                          new java.util.Timer().schedule(
                                  new java.util.TimerTask() {
@@ -140,7 +141,6 @@ class ElevatorCar
                                  3000
                          );
                      }
-                     //updateLabels();
 
                  }
 
@@ -151,8 +151,6 @@ class ElevatorCar
 
 
     void closeDoors() {
-
-
 
         status=Status.CLOSING;
         //if no one currently walking to elevator, close and move
@@ -169,51 +167,98 @@ class ElevatorCar
                 Controller.downRequests.remove((Integer)currentFloor);
             }
         }
-//        else {
-//            Boolean passengerGoingUp = Controller.floorQueues.get(currentFloor-1).getFirst().direction.equals("UP");
-//            if (passengerGoingUp && !Controller.upRequests.contains(currentFloor)) {
-//                Controller.upRequests.add(currentFloor);
-//            } else if (!Controller.downRequests.contains(currentFloor)) {
-//                Controller.downRequests.add(currentFloor);
-//            }
-//        }
+
         leftDoorOpen.setDuration(Duration.seconds(3));
         leftDoorOpen.setToX(0);
         rightDoorOpen.setDuration(Duration.seconds(3));
         rightDoorOpen.setToX(0);
         doorOpen = new ParallelTransition(leftDoorOpen, rightDoorOpen);
-
+        Floor.onLeaveFloor(currentFloor, destinationDirection,debugName );//change corresponding triangle
         doorOpen.play();
         doorOpen.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent event) {
                 if (travelingRiders.isEmpty()){
-                    if (!upRequests.isEmpty() && !downRequests.isEmpty()){
+                    if (!upRequests.isEmpty() || !downRequests.isEmpty()){
                         for (int u: Controller.upRequests){
                             if (u > currentFloor){
                                 floorStops.add(u);
                             }
                         }
-                        sortDropOffFloor();
-                        moveElevator(floorStops.get(0));
-                        upRequests.removeAll(floorStops);
-
-                        if (floorStops.isEmpty()){//if no suitable uprequests added
+                        if (!floorStops.isEmpty()){
+                            sortDropOffFloor();
+                            moveElevator(floorStops.get(0));
+                            upRequests.removeAll(floorStops);
+                        } else if (floorStops.isEmpty()){//if no suitable uprequests added
                             for (int d: Controller.downRequests){
                                 if (d < currentFloor){
                                     floorStops.add(d);
                                 }
                             }
-                            sortDropOffFloor();
-                            moveElevator(floorStops.get(0));
-                            downRequests.removeAll(floorStops);
+                            if (!floorStops.isEmpty()){
+                                sortDropOffFloor();
+                                moveElevator(floorStops.get(0));
+                                downRequests.removeAll(floorStops);
+                            } else {//should never be waiting if there are still floors to service
+                                ArrayList<Integer> unservicedFloors = new ArrayList<Integer>();
+                                unservicedFloors.addAll(downRequests);
+                                unservicedFloors.addAll(upRequests);
+                                Set<Integer> uFNoDupes = new LinkedHashSet<Integer>(unservicedFloors);//get rid of duplicates
+                                unservicedFloors.clear();
+                                unservicedFloors.addAll(uFNoDupes);
+                                int longestWait = 0;
+                                int floorWithLongestWait = 1;
+                                for (int f: unservicedFloors){
+                                    int thisWait = Controller.floorsList.get(f-1).ridersInQueue.getFirst().waitDuration;
+                                    if ( thisWait > longestWait){
+                                        longestWait = thisWait;
+                                        floorWithLongestWait = f;
+                                    }
+                                }
+                                moveElevator(floorWithLongestWait);
+
+
+                                }
                         }
                     } else {
                         status= Status.WAITING;
+                        int waitAtFloor = Controller.setWaitingCar();//find floor that most needs elevator
+                        if (waitAtFloor > 0){
+                            moveElevator(waitAtFloor);
+                        }
                         }
                 } else {
-                    //move to next floor destination
+                    //if not empty, car has a direction, check which floors you can pick up going in that direction
+                    if (currentDirection.equals("UP")){
+                        if (!upRequests.isEmpty()) {
+                            for (int u : Controller.upRequests) {
+                                if (u > currentFloor && !floorStops.contains(u)) {
+                                    floorStops.add(u);
+                                }
+                            }
+                        }
+                        upRequests.removeAll(floorStops);
+                    } else if (currentDirection.equals("DOWN")){
+                        if (!downRequests.isEmpty()) {
+                            for (int d : Controller.downRequests) {
+                                if (d < currentFloor && !floorStops.contains(d)) {
+                                    floorStops.add(d);
+                                }
+                            }
+                        }
+                        downRequests.removeAll(floorStops);
+                    }
+
+
                     sortDropOffFloor();
+                    if (debugName.equals("car1")){
+                        Controller.floorStopLabels.get(0).setText(floorStops.toString());
+                    } else if (debugName.equals("car2")){
+                        Controller.floorStopLabels.get(1).setText(floorStops.toString());
+                    } else if (debugName.equals("car3")){
+                        Controller.floorStopLabels.get(2).setText(floorStops.toString());
+
+                    }
                     moveElevator(floorStops.get(0));
 
                 }
@@ -257,7 +302,6 @@ class ElevatorCar
 
     private void setCurrentFloor(int floor){
         currentFloor = floor;
-
         leftDoor = doorSet2.get((floor-1)+(floor-1));
         rightDoor = doorSet2.get((floor)+(floor-1));
         leftDoorOpen.setNode(leftDoor);
@@ -269,83 +313,10 @@ class ElevatorCar
 //    }
 
     private void moveElevator(int moveToFloor){
-        //travelling riders
-        //which direction car going (UP,DOWN)
-        //array of each floor stop
-        //alert riders when it's their stop
 
-        if (currentDirection.equals("UP")){//check next floor to add]
-            //System.out.println("current floor is "+currentFloor);
-            //System.out.println("up requests size is "+Controller.upRequests.size());
-            if (!Controller.upRequests.isEmpty()){
-                int removeFloor = 0;
-                Collections.sort(Controller.upRequests);
-                for (int c: Controller.upRequests){
-                    if (c>currentFloor && getCarWeight()<500){
-                        if (!Controller.floorsList.get(c-1).ridersInQueue.isEmpty() && !floorStops.contains(c)){//floor has riders & you're not already stopping there
-                            removeFloor=c;
-                            //System.out.println("floor = "+c);
-                            floorStops.add(c);
-                            break;
-                        }
-                    }
-                }
-                Controller.upRequests.remove((Integer)(removeFloor));
-                //System.out.println("removed floor "+removeFloor+" before elevator moved");
-                sortDropOffFloor();
-                //updateLabels();
-            }
-            if (floorStops!=null){//if any floors not in direction, remove
-                ArrayList<Integer> removeFloors = new ArrayList<Integer>();
-                for (int fs: floorStops){
-                    if (fs<currentFloor){
-                            removeFloors.add(fs);
-                        }
-                    }
-                    floorStops.removeAll(removeFloors);
-                }
+       int pFloor=moveToFloor;
+         destinationDirection = currentDirection;
 
-        } else if (currentDirection.equals("DOWN")) {
-            if (!Controller.downRequests.isEmpty()){
-                int removeFloor = 0;
-                Collections.sort(Controller.downRequests);
-                Collections.reverse(Controller.downRequests);
-                for (int c: Controller.downRequests){
-                    if (c<currentFloor  && getCarWeight()<500){
-                        if (!Controller.floorsList.get(c-1).ridersInQueue.isEmpty() && !floorStops.contains(c)){//floor has riders & you're not already stopping there
-                            removeFloor=c;
-                            floorStops.add(c);
-                            break;
-                        }
-                    }
-                }
-                Controller.downRequests.remove((Integer)(removeFloor));
-                sortDropOffFloor();
-            }
-            if (floorStops!=null){//if any floors not in direction, remove
-                ArrayList<Integer> removeFloors = new ArrayList<Integer>();
-                for (int fs: floorStops){
-                    if (fs>currentFloor ){
-                        removeFloors.add(fs);
-                    }
-
-                }
-                floorStops.removeAll(removeFloors);
-            }
-        }
-        //System.out.println(debugName+"'s next floors are: "+ floorStops);
-        //System.out.println(debugName+"'s GOING "+ currentDirection);
-        int pFloor=moveToFloor;
-        if (!getDropOffFloor().isEmpty()) {
-                for (int i : getDropOffFloor()) {
-                    if (!Controller.floorsList.get(i - 1).ridersInQueue.isEmpty()) {
-                        pFloor = i;//only go to floor if there are passengers in line
-                        break;
-                    } else{
-                        pFloor = getDropOffFloor().get(0);
-                    }
-                }
-            }
         if (pFloor>currentFloor){
             status=Status.GOING_UP;
             currentDirection="UP";
@@ -388,8 +359,11 @@ class ElevatorCar
 
             travellerCount++;
         }
+
         ridersMove.getChildren().add(elevatorMove);
         //System.out.println("elevator direction: " + currentDirection);
+
+
         ridersMove.onFinishedProperty().set(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 timer.cancel();
@@ -397,11 +371,24 @@ class ElevatorCar
                 setCurrentFloor(fpFloor);
 
                 ctrlr.updateTravellers(Controller.travellersCount);
-                openDoors();
+                if (!Controller.floorsList.get(fpFloor-1).ridersInQueue.isEmpty() || !travelingRiders.isEmpty()){
+                    openDoors();
+                } else {
+                    status = Status.WAITING;
+                }
         }
         });
         updateLabels();
-
+        if (debugName.equals("car1")){
+            Controller.floorStopLabels.get(0).setText(floorStops.toString());
+        } else if (debugName.equals("car2")){
+            Controller.floorStopLabels.get(1).setText(floorStops.toString());
+        } else if (debugName.equals("car3")){
+            Controller.floorStopLabels.get(2).setText(floorStops.toString());
+        }
+        if (!Controller.floorsList.get(fpFloor-1).ridersInQueue.isEmpty() || !travelingRiders.isEmpty()){
+            Floor.onEnterFloor(fpFloor, destinationDirection,debugName );//change corresponding triangle
+        }
         ridersMove.play();
 
     }
